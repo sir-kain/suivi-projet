@@ -6,7 +6,7 @@
 {% block body %}
 	<h1>Bande du
 		{{ bande.dateDebut|date('Y-m-d') }}</h1>
-	<a href="{{ path('app_bande_edit', {'id': bande.id}) }}">
+	<a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)">
 		<i class="fa-solid fa-pen-to-square"></i>
 	</a>
 
@@ -35,7 +35,7 @@
 
 
 	<h2>Depenses</h2>
-	<a href="{{ path('app_depense_new') }}">
+	<a href="#" data-target="modal-edit-depense" onclick="toggleModal(event)">
 		<i class="fa-solid fa-plus"></i>
 	</a>
 	<table role="grid" class="table">
@@ -108,6 +108,25 @@
 	</mark>
 
 	{# <a href="{{ path('app_bande_index') }}">back to list</a>
-								
-									{{ include('bande/_delete_form.html.twig') }} #}
+																	
+																		{{ include('bande/_delete_form.html.twig') }} #}
+
+
+	<!-- Modal -->
+	<dialog id="modal-edit-bande">
+		<article>
+			<a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande" onclick="toggleModal(event)"></a>
+			<h3>Editer les infos de la bande!</h3>
+			{{ include('bande/_form.html.twig', {'button_label': 'Update'}) }}
+		</article>
+	</dialog>
+
+	<!-- Modal -->
+	<dialog id="modal-edit-depense">
+		<article>
+			<a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense" onclick="toggleModal(event)"></a>
+			<h3>Renseigner une nouvelle depense!</h3>
+			{{ include('depense/_form.html.twig', {'button_label': 'Update'}) }}
+		</article>
+	</dialog>
 {% endblock %}

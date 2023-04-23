@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Bande;
+use App\Entity\Depense;
 use App\Form\BandeType;
+use App\Form\DepenseType;
+use App\Form\VenteType;
 use App\Repository\BandeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,12 +46,19 @@ class BandeController extends AbstractController
     #[Route('/{id}', name: 'app_bande_show', methods: ['GET'])]
     public function show(Bande $bande, BandeRepository $bandeRepository): Response
     {
+        $formBande = $this->createForm(BandeType::class, $bande, ['action' => $this->generateUrl('app_bande_edit', ['id' => $bande->getId()])]);
+        $formDepense = $this->createForm(DepenseType::class, new Depense(), ['action' => $this->generateUrl('app_depense_new')]);
+        $formVente = $this->createForm(VenteType::class);
+
         return $this->render('bande/show.html.twig', [
             'bande' => $bande,
             'totalDepense' => $bandeRepository->totalDepense($bande),
             'totalVente' => $bandeRepository->totalVente($bande),
             'stock' => $bandeRepository->stock($bande),
             'bilan' => $bandeRepository->bilan($bande),
+            'formBande' => $formBande,
+            'formDepense' => $formDepense,
+            'formVente' => $formVente,
         ]);
     }
 
@@ -61,7 +71,7 @@ class BandeController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $bandeRepository->save($bande, true);
 
-            return $this->redirectToRoute('app_bande_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_bande_show', ['id' => $bande->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('bande/edit.html.twig', [
@@ -73,7 +83,7 @@ class BandeController extends AbstractController
     #[Route('/{id}', name: 'app_bande_delete', methods: ['POST'])]
     public function delete(Request $request, Bande $bande, BandeRepository $bandeRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$bande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $bande->getId(), $request->request->get('_token'))) {
             $bandeRepository->remove($bande, true);
         }
 

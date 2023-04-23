@@ -31,7 +31,7 @@ class DepenseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $depenseRepository->save($depense, true);
 
-            return $this->redirectToRoute('app_depense_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('depense/new.html.twig', [
@@ -69,7 +69,7 @@ class DepenseController extends AbstractController
     #[Route('/{id}', name: 'app_depense_delete', methods: ['POST'])]
     public function delete(Request $request, Depense $depense, DepenseRepository $depenseRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$depense->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $depense->getId(), $request->request->get('_token'))) {
             $depenseRepository->remove($depense, true);
         }
 
