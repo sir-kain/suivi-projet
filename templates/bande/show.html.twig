@@ -13,19 +13,19 @@
 	<table role="grid" class="table">
 		<tbody>
 			<tr>
-				<th>Nb_poussins</th>
+				<th>Nombre de poussins</th>
 				<td>{{ bande.nbPoussins }}</td>
 			</tr>
 			<tr>
-				<th>Date_debut</th>
+				<th>Date démarrage</th>
 				<td>{{ bande.dateDebut|date('Y-m-d') }}</td>
 			</tr>
 			<tr>
-				<th>Nb_mortalite</th>
+				<th>Mortalités</th>
 				<td>{{ bande.nbMortalite }}</td>
 			</tr>
 			<tr>
-				<th>Stock</th>
+				<th>Quantité en stock</th>
 				<td>
 					<mark>{{ stock }}</mark>
 				</td>
@@ -43,7 +43,7 @@
 	</table>
 
 
-	<h2>Depenses</h2>
+	<h2>Dépenses</h2>
 	<a href="#" data-target="modal-add-depense" onclick="toggleModal(event)">
 		<i class="fa-solid fa-plus"></i>
 	</a>
@@ -87,7 +87,7 @@
 	<table role="grid" class="table">
 		<tbody>
 			<tr>
-				<th>Quantite</th>
+				<th>Quantité (Nombre de poulets)</th>
 				<td>Prix</td>
 				<td>Actions</td>
 			</tr>
@@ -133,7 +133,7 @@
 	<article>
 		<a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande" onclick="toggleModal(event)"></a>
 		<h3>Editer les infos de la bande!</h3>
-		{{ include('bande/_form.html.twig', {'button_label': 'Update'}) }}
+		{{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
 	</article>
 </dialog>
 
@@ -141,7 +141,7 @@
 <dialog id="modal-add-depense">
 	<article>
 		<a href="#close" aria-label="Close" class="close" data-target="modal-add-depense" onclick="toggleModal(event)"></a>
-		<h3>Renseigner une nouvelle depense!</h3>
+		<h3>Renseigner une nouvelle dépense!</h3>
 		{{ include('depense/_form.html.twig') }}
 	</article>
 </dialog>

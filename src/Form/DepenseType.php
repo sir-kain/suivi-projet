@@ -12,9 +12,16 @@ class DepenseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('description')
-            ->add('prix')
-            ->add('created_at')
+            ->add('description', null, [
+                'label' => 'Description de la dépense',
+            ])
+            ->add('prix', null, [
+                'label' => 'Prix',
+            ])
+            ->add('created_at', null, [
+                'label' => 'Créée le',
+                'widget' => 'single_text',
+            ])
             ->add('bande')
         ;
     }

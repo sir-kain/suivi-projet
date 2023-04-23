@@ -1,39 +1,45 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bande index{% endblock %}
+{% block title %}Bande index
+{% endblock %}
 
 {% block body %}
-    <h1>Bande index</h1>
+	<h1>Bandes en cours</h1>
+	<a href="{{ path('app_bande_new') }}">
+		<i class="fa-solid fa-plus"></i>
+	</a>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nb_poussins</th>
-                <th>Date_debut</th>
-                <th>Nb_mortalite</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for bande in bandes %}
-            <tr>
-                <td>{{ bande.id }}</td>
-                <td>{{ bande.nbPoussins }}</td>
-                <td>{{ bande.dateDebut ? bande.dateDebut|date('Y-m-d') : '' }}</td>
-                <td>{{ bande.nbMortalite }}</td>
-                <td>
-                    <a href="{{ path('app_bande_show', {'id': bande.id}) }}">show</a>
-                    <a href="{{ path('app_bande_edit', {'id': bande.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_bande_new') }}">Create new</a>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Nombre de poussins</th>
+				<th>Date démarrage</th>
+				<th>Mortalites</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for bande in bandes %}
+				<tr>
+					<td>{{ bande.id }}</td>
+					<td>{{ bande.nbPoussins }}</td>
+					<td>{{ bande.dateDebut ? bande.dateDebut|date('Y-m-d') : '' }}</td>
+					<td>{{ bande.nbMortalite }}</td>
+					<td class="actions">
+						<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline">
+							<i class="fa-regular fa-eye"></i>
+						</a>
+						<a href="{{ path('app_bande_edit', {'id': bande.id}) }}" role="button" class="outline">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">Pas de bandes actuellement</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 {% endblock %}

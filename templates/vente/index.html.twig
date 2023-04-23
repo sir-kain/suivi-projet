@@ -1,39 +1,44 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Vente index{% endblock %}
+{% block title %}Vente index
+{% endblock %}
 
 {% block body %}
-    <h1>Vente index</h1>
+	<h1>Vente index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Prix</th>
-                <th>Quantite</th>
-                <th>Created_at</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for vente in ventes %}
-            <tr>
-                <td>{{ vente.id }}</td>
-                <td>{{ vente.prix }}</td>
-                <td>{{ vente.quantite }}</td>
-                <td>{{ vente.createdAt ? vente.createdAt|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('app_vente_show', {'id': vente.id}) }}">show</a>
-                    <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Id</th>
+				<th>Prix</th>
+				<th>Quantité (Nombre de poulets vendus)</th>
+				<th>Créée le</th>
+				<th>actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for vente in ventes %}
+				<tr>
+					<td>{{ vente.id }}</td>
+					<td>{{ vente.prix }}</td>
+					<td>{{ vente.quantite }}</td>
+					<td>{{ vente.createdAt ? vente.createdAt|date('Y-m-d') : '' }}</td>
+					<td class="actions">
+						<a href="{{ path('app_vente_show', {'id': vente.id}) }}" role="button" class="outline">
+							<i class="fa-regular fa-eye"></i>
+						</a>
+						<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+					</td>
+				</tr>
+			{% else %}
+				<tr>
+					<td colspan="5">no records found</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
 
-    <a href="{{ path('app_vente_new') }}">Create new</a>
+	{# <a href="{{ path('app_vente_new') }}">Create new</a> #}
 {% endblock %}

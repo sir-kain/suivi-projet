@@ -13,15 +13,15 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/vente')]
 class VenteController extends AbstractController
 {
-    #[Route('/', name: 'app_vente_index', methods: ['GET'])]
-    public function index(VenteRepository $venteRepository): Response
-    {
-        return $this->render('vente/index.html.twig', [
-            'ventes' => $venteRepository->findAll(),
-        ]);
-    }
+    // #[Route('/', name: 'app_vente_index', methods: ['GET'])]
+    // public function index(VenteRepository $venteRepository): Response
+    // {
+    //     return $this->render('vente/index.html.twig', [
+    //         'ventes' => $venteRepository->findAll(),
+    //     ]);
+    // }
 
-    #[Route('/new', name: 'app_vente_new', methods: ['GET', 'POST'])]
+    #[Route('/new', name: 'app_vente_new', methods: ['POST'])]
     public function new(Request $request, VenteRepository $venteRepository): Response
     {
         $vente = new Vente();

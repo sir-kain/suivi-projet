@@ -12,9 +12,16 @@ class VenteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('quantite')
-            ->add('prix')
-            ->add('created_at')
+            ->add('quantite', null, [
+                'label' => 'Nombre de poulets',
+            ])
+            ->add('prix', null, [
+                'label' => 'Prix',
+            ])
+            ->add('created_at', null, [
+                'label' => 'Créée le',
+                'widget' => 'single_text',
+            ])
             ->add('bande');
     }
 

@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Edit Depense{% endblock %}
+{% block title %}Edit Depense
+{% endblock %}
 
 {% block body %}
-    <h1>Edit Depense</h1>
+	<h1>Modifier la dépense</h1>
 
-    {{ include('depense/_form.html.twig', {'button_label': 'Update'}) }}
+	{{ include('depense/_form.html.twig', {'button_label': 'Editer'}) }}
 
-    <a href="{{ path('app_depense_index') }}">back to list</a>
+	<a href="{{ path('app_depense_index') }}">Retour à la liste des dépenses hors bande</a>
 
-    {{ include('depense/_delete_form.html.twig') }}
+	{{ include('depense/_delete_form.html.twig') }}
 {% endblock %}

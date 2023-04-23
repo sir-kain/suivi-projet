@@ -16,19 +16,19 @@
                 <td>{{ vente.prix }}</td>
             </tr>
             <tr>
-                <th>Quantite</th>
+                <th>Quantité</th>
                 <td>{{ vente.quantite }}</td>
             </tr>
             <tr>
-                <th>Created_at</th>
+                <th>Créée le</th>
                 <td>{{ vente.createdAt ? vente.createdAt|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_vente_index') }}">back to list</a>
+    <a href="{{ path('app_bande_show', {'id': vente.bande.id}) }}">Retour à la bande</a>
 
-    <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">edit</a>
+    <a href="{{ path('app_vente_edit', {'id': vente.id}) }}">Editer</a>
 
     {{ include('vente/_delete_form.html.twig') }}
 {% endblock %}

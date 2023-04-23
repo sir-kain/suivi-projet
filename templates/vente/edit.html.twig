@@ -3,11 +3,11 @@
 {% block title %}Edit Vente{% endblock %}
 
 {% block body %}
-    <h1>Edit Vente</h1>
+    <h1>Modifier les infos de la vente</h1>
 
-    {{ include('vente/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('vente/_form.html.twig', {'button_label': 'Editer'}) }}
 
-    <a href="{{ path('app_vente_index') }}">back to list</a>
+    {# <a href="{{ path('app_vente_index') }}">back to list</a> #}
 
-    {{ include('vente/_delete_form.html.twig') }}
+    {# {{ include('vente/_delete_form.html.twig') }} #}
 {% endblock %}
