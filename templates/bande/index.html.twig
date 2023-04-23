@@ -24,7 +24,7 @@
 				<tr>
 					<td>{{ bande.id }}</td>
 					<td>{{ bande.nbPoussins }}</td>
-					<td>{{ bande.dateDebut ? bande.dateDebut|date('Y-m-d') : '' }}</td>
+					<td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
 					<td>{{ bande.nbMortalite }}</td>
 					<td class="actions">
 						<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline">

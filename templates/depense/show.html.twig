@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Created_at</th>
-                <td>{{ depense.createdAt ? depense.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ depense.createdAt ? depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
             </tr>
         </tbody>
     </table>

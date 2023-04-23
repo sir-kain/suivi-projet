@@ -3,11 +3,15 @@
 
 ## TODO
 
-- [ ] Formatter les dates.
+- [X] Formatter les dates.
+
+- [ ] Afficher les listes par ordre de derniere creation.
 
 - [X] Mettre des libelles claires pour la presentation de l'app
 
-- [ ] Faire un seul champs pour les date `input:date`
+- [X] Faire un seul champs pour les date `input:date`
+
+- [ ] Calculer et afficher la duree en jour d'une bande, Tenir en compte la date de cloture.
 
 - [ ] Ajouter les colonnes description et client a la vente 
 

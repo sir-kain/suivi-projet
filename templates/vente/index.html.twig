@@ -22,7 +22,7 @@
 					<td>{{ vente.id }}</td>
 					<td>{{ vente.prix }}</td>
 					<td>{{ vente.quantite }}</td>
-					<td>{{ vente.createdAt ? vente.createdAt|date('Y-m-d') : '' }}</td>
+					<td>{{ vente.createdAt ? vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
 					<td class="actions">
 						<a href="{{ path('app_vente_show', {'id': vente.id}) }}" role="button" class="outline">
 							<i class="fa-regular fa-eye"></i>

@@ -5,7 +5,7 @@
 
 {% block body %}
 	<h1>Bande du
-		{{ bande.dateDebut|date('Y-m-d') }}</h1>
+		{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
 	<a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)">
 		<i class="fa-solid fa-pen-to-square"></i>
 	</a>
@@ -18,7 +18,8 @@
 			</tr>
 			<tr>
 				<th>Date démarrage</th>
-				<td>{{ bande.dateDebut|date('Y-m-d') }}</td>
+
+				<td>{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
 			</tr>
 			<tr>
 				<th>Mortalités</th>
@@ -52,6 +53,7 @@
 			<tr>
 				<th>Description</th>
 				<td>Prix</td>
+				<td>Date</td>
 				<td>Actions</td>
 			</tr>
 			{% for depense in bande.depenses %}
@@ -59,6 +61,7 @@
 					<th>{{ depense.description }}</th>
 					<td>{{ depense.prix }}
 						FCFA</td>
+					<td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
 					<td class="actions">
 						<a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline">
 							<i class="fa-solid fa-pen-to-square"></i>
@@ -89,6 +92,7 @@
 			<tr>
 				<th>Quantité (Nombre de poulets)</th>
 				<td>Prix</td>
+				<td>Date</td>
 				<td>Actions</td>
 			</tr>
 			{% for vente in bande.ventes %}
@@ -96,6 +100,7 @@
 					<th>{{ vente.quantite }}</th>
 					<td>{{ vente.prix }}
 						FCFA</td>
+					<td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
 					<td class="actions">
 						<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline">
 							<i class="fa-solid fa-pen-to-square"></i>

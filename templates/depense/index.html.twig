@@ -22,7 +22,7 @@
 					<td>{{ depense.id }}</td>
 					<td>{{ depense.description }}</td>
 					<td>{{ depense.prix }}</td>
-					<td>{{ depense.createdAt ? depense.createdAt|date('Y-m-d') : '' }}</td>
+					<td>{{ depense.createdAt ? depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
 					<td class="actions">
 						<a href="{{ path('app_depense_show', {'id': depense.id}) }}" role="button" class="outline">
 							<i class="fa-regular fa-eye"></i>

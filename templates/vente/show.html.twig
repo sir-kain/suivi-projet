@@ -21,7 +21,7 @@
             </tr>
             <tr>
                 <th>Créée le</th>
-                <td>{{ vente.createdAt ? vente.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ vente.createdAt ? vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
             </tr>
         </tbody>
     </table>
