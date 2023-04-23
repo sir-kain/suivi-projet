@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\BandeRepository;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -19,14 +20,14 @@ class Bande
 
     #[ORM\Column]
     private ?int $nb_poussins = null;
+    
+    private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_debut = null;
 
     #[ORM\Column]
     private ?int $nb_mortalite = null;
-
-    private ?int $nb_jours = null;
 
     #[ORM\OneToMany(mappedBy: 'bande', targetEntity: Depense::class, orphanRemoval: true)]
     private Collection $depenses;
@@ -83,7 +84,7 @@ class Bande
 
     public function getNbJours(): ?int
     {
-        return 10;
+        return date_diff(new DateTime(), $this->getDateDebut())->days;
     }
 
     /**

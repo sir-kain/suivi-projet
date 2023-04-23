@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bande
+{% endblock %}
+
+{% block body %}
+	<h1>Bande</h1>
+
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Id</th>
+				<td>{{ bande.id }}</td>
+			</tr>
+			<tr>
+				<th>Nb_poussins</th>
+				<td>{{ bande.nbPoussins }}</td>
+			</tr>
+			<tr>
+				<th>Date_debut</th>
+				<td>{{ bande.dateDebut ? bande.dateDebut|date('Y-m-d') : '' }}</td>
+			</tr>
+			<tr>
+				<th>Nb_mortalite</th>
+				<td>{{ bande.nbMortalite }}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<h1>Depenses</h1>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Description</th>
+				<td>Prix</td>
+			</tr>
+			{% for depense in bande.depenses %}
+				<tr>
+					<th>{{ depense.description }}</th>
+					<td>{{ depense.prix }}
+						FCFA</td>
+					<td>
+						<a href="{{path('app_depense_edit', {id: depense.id})}}">Edit<a/></td>
+					</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<th>Total</th>
+				<td>Prix total</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+	<h1>Ventes</h1>
+	<table class="table">
+		<tbody>
+			<tr>
+				<th>Quantite</th>
+				<td>Prix</td>
+				<td>Actions</td>
+			</tr>
+			{% for vente in bande.ventes %}
+				<tr>
+					<th>{{ vente.quantite }}</th>
+					<td>{{ vente.prix }}
+						FCFA</td>
+					<td>
+						<a href="{{path('app_vente_edit', {id: vente.id})}}">Edit<a/></td>
+					</td>
+				</tr>
+			{% endfor %}
+			<tr>
+				<th>Total</th>
+				<td>Prix total</td>
+			</tr>
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_bande_index') }}">back to list</a>
+
+	<a href="{{ path('app_bande_edit', {'id': bande.id}) }}">edit</a>
+
+	{{ include('bande/_delete_form.html.twig') }}
+{% endblock %}

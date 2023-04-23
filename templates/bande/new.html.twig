@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Bande{% endblock %}
+
+{% block body %}
+    <h1>Create new Bande</h1>
+
+    {{ include('bande/_form.html.twig') }}
+
+    <a href="{{ path('app_bande_index') }}">back to list</a>
+{% endblock %}
