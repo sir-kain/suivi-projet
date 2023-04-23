@@ -17,12 +17,6 @@
 				<td>{{ bande.nbPoussins }}</td>
 			</tr>
 			<tr>
-				<th>Stock</th>
-				<td>
-					<u>{{ stock }}</u>
-				</td>
-			</tr>
-			<tr>
 				<th>Date_debut</th>
 				<td>{{ bande.dateDebut|date('Y-m-d') }}</td>
 			</tr>
@@ -30,12 +24,27 @@
 				<th>Nb_mortalite</th>
 				<td>{{ bande.nbMortalite }}</td>
 			</tr>
+			<tr>
+				<th>Stock</th>
+				<td>
+					<mark>{{ stock }}</mark>
+				</td>
+			</tr>
+			<tr>
+				<th>Bilan</th>
+				<td>
+					<mark>
+						{{bilan}}
+						FCFA
+					</mark>
+				</td>
+			</tr>
 		</tbody>
 	</table>
 
 
 	<h2>Depenses</h2>
-	<a href="#" data-target="modal-edit-depense" onclick="toggleModal(event)">
+	<a href="#" data-target="modal-add-depense" onclick="toggleModal(event)">
 		<i class="fa-solid fa-plus"></i>
 	</a>
 	<table role="grid" class="table">
@@ -50,8 +59,11 @@
 					<th>{{ depense.description }}</th>
 					<td>{{ depense.prix }}
 						FCFA</td>
-					<td>
-						<a href="{{path('app_depense_edit', {id: depense.id})}}">Edit<a/></td>
+					<td class="actions">
+						<a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+						{{ include('depense/_delete_form.html.twig') }}
 					</td>
 				</tr>
 			{% endfor %}
@@ -69,7 +81,7 @@
 
 
 	<h2>Ventes</h2>
-	<a href="{{ path('app_vente_new') }}">
+	<a href="#" data-target="modal-add-vente" onclick="toggleModal(event)">
 		<i class="fa-solid fa-plus"></i>
 	</a>
 	<table role="grid" class="table">
@@ -84,49 +96,61 @@
 					<th>{{ vente.quantite }}</th>
 					<td>{{ vente.prix }}
 						FCFA</td>
-					<td>
-						<a href="{{path('app_vente_edit', {id: vente.id})}}">Edit<a/></td>
+					<td class="actions">
+						<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline">
+							<i class="fa-solid fa-pen-to-square"></i>
+						</a>
+						{{ include('vente/_delete_form.html.twig') }}
 					</td>
 				</tr>
-			{% endfor %}
-			<tr>
-				<th>Total</th>
-				<td>
-					<mark>
-						{{totalVente}}
-						FCFA
-					</mark>
-				</td>
 			</tr>
-		</tbody>
-	</table>
+		{% endfor %}
+		<tr>
+			<th>Total</th>
+			<td>
+				<mark>
+					{{totalVente}}
+					FCFA
+				</mark>
+			</td>
+		</tr>
+	</tbody>
+</table>
 
-	<h2>Bilan:</h2>
-	<mark>
-		{{bilan}}
-		FCFA
-	</mark>
+<h2>Bilan:</h2>
+<mark>
+	{{bilan}}
+	FCFA
+</mark>
 
-	{# <a href="{{ path('app_bande_index') }}">back to list</a>
-																	
-																		{{ include('bande/_delete_form.html.twig') }} #}
+{# <a href="{{ path('app_bande_index') }}">back to list</a>
+																		
+																			{{ include('bande/_delete_form.html.twig') }} #}
 
 
-	<!-- Modal -->
-	<dialog id="modal-edit-bande">
-		<article>
-			<a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande" onclick="toggleModal(event)"></a>
-			<h3>Editer les infos de la bande!</h3>
-			{{ include('bande/_form.html.twig', {'button_label': 'Update'}) }}
-		</article>
-	</dialog>
+<!-- Modal -->
+<dialog id="modal-edit-bande">
+	<article>
+		<a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande" onclick="toggleModal(event)"></a>
+		<h3>Editer les infos de la bande!</h3>
+		{{ include('bande/_form.html.twig', {'button_label': 'Update'}) }}
+	</article>
+</dialog>
 
-	<!-- Modal -->
-	<dialog id="modal-edit-depense">
-		<article>
-			<a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense" onclick="toggleModal(event)"></a>
-			<h3>Renseigner une nouvelle depense!</h3>
-			{{ include('depense/_form.html.twig', {'button_label': 'Update'}) }}
-		</article>
-	</dialog>
-{% endblock %}
+<!-- Modal -->
+<dialog id="modal-add-depense">
+	<article>
+		<a href="#close" aria-label="Close" class="close" data-target="modal-add-depense" onclick="toggleModal(event)"></a>
+		<h3>Renseigner une nouvelle depense!</h3>
+		{{ include('depense/_form.html.twig') }}
+	</article>
+</dialog>
+
+<!-- Modal -->
+<dialog id="modal-add-vente">
+	<article>
+		<a href="#close" aria-label="Close" class="close" data-target="modal-add-vente" onclick="toggleModal(event)"></a>
+		<h3>Renseigner une nouvelle vente!</h3>
+		{{ include('vente/_form.html.twig') }}
+	</article>
+</dialog>{% endblock %}

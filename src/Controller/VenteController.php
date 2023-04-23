@@ -31,7 +31,7 @@ class VenteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $venteRepository->save($vente, true);
 
-            return $this->redirectToRoute('app_vente_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('vente/new.html.twig', [
@@ -57,12 +57,12 @@ class VenteController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $venteRepository->save($vente, true);
 
-            return $this->redirectToRoute('app_vente_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
-
+        
         return $this->renderForm('vente/edit.html.twig', [
             'vente' => $vente,
-            'form' => $form,
+            'formVente' => $form,
         ]);
     }
 
@@ -72,7 +72,7 @@ class VenteController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$vente->getId(), $request->request->get('_token'))) {
             $venteRepository->remove($vente, true);
         }
-
-        return $this->redirectToRoute('app_vente_index', [], Response::HTTP_SEE_OTHER);
+        
+        return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Bande;
 use App\Entity\Depense;
+use App\Entity\Vente;
 use App\Form\BandeType;
 use App\Form\DepenseType;
 use App\Form\VenteType;
@@ -39,7 +40,7 @@ class BandeController extends AbstractController
 
         return $this->renderForm('bande/new.html.twig', [
             'bande' => $bande,
-            'form' => $form,
+            'formBande' => $form,
         ]);
     }
 
@@ -48,7 +49,7 @@ class BandeController extends AbstractController
     {
         $formBande = $this->createForm(BandeType::class, $bande, ['action' => $this->generateUrl('app_bande_edit', ['id' => $bande->getId()])]);
         $formDepense = $this->createForm(DepenseType::class, new Depense(), ['action' => $this->generateUrl('app_depense_new')]);
-        $formVente = $this->createForm(VenteType::class);
+        $formVente = $this->createForm(VenteType::class, new Vente(), ['action' => $this->generateUrl('app_vente_new')]);
 
         return $this->render('bande/show.html.twig', [
             'bande' => $bande,
@@ -76,7 +77,7 @@ class BandeController extends AbstractController
 
         return $this->renderForm('bande/edit.html.twig', [
             'bande' => $bande,
-            'form' => $form,
+            'formBande' => $form,
         ]);
     }
 

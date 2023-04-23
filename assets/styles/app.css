@@ -14,3 +14,29 @@ h2 {
 .success {
   color: #ddffdd;
 }
+
+table td.actions form {
+  display: inline-block;
+  margin-bottom: unset;
+}
+
+table td.actions a,
+table td.actions button {
+  padding: 0.3rem;
+  line-height: 1;
+  margin-bottom: unset;
+}
+
+table td.actions a i,
+table td.actions button i {
+  font-size: 0.7rem;
+}
+
+dialog div:has(> [name="depense[bande]"]), dialog div:has(> [name="vente[bande]"]) {
+  display: none;
+}
+
+dialog div:has(> #depense_created_at), dialog div:has(> #vente_created_at) {
+  display: none;
+}
+

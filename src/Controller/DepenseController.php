@@ -36,7 +36,7 @@ class DepenseController extends AbstractController
 
         return $this->renderForm('depense/new.html.twig', [
             'depense' => $depense,
-            'form' => $form,
+            'formDepense' => $form,
         ]);
     }
 
@@ -62,7 +62,7 @@ class DepenseController extends AbstractController
 
         return $this->renderForm('depense/edit.html.twig', [
             'depense' => $depense,
-            'form' => $form,
+            'formDepense' => $form,
         ]);
     }
 
@@ -73,6 +73,6 @@ class DepenseController extends AbstractController
             $depenseRepository->remove($depense, true);
         }
 
-        return $this->redirectToRoute('app_depense_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
     }
 }
