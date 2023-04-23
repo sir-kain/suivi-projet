@@ -1,0 +1,16 @@
+body > header {
+  padding: 0.5rem;
+}
+
+h1,
+h2 {
+  display: inline-block;
+}
+
+.warning {
+  color: #ffffcc;
+}
+
+.success {
+  color: #ddffdd;
+}

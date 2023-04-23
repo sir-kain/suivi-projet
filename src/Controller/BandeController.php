@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/')]
+#[Route('/bande')]
 class BandeController extends AbstractController
 {
     #[Route('/', name: 'app_bande_index', methods: ['GET'])]
@@ -41,10 +41,14 @@ class BandeController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_bande_show', methods: ['GET'])]
-    public function show(Bande $bande): Response
+    public function show(Bande $bande, BandeRepository $bandeRepository): Response
     {
         return $this->render('bande/show.html.twig', [
             'bande' => $bande,
+            'totalDepense' => $bandeRepository->totalDepense($bande),
+            'totalVente' => $bandeRepository->totalVente($bande),
+            'stock' => $bandeRepository->stock($bande),
+            'bilan' => $bandeRepository->bilan($bande),
         ]);
     }
 

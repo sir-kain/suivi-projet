@@ -4,21 +4,27 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Bande</h1>
+	<h1>Bande du
+		{{ bande.dateDebut|date('Y-m-d') }}</h1>
+	<a href="{{ path('app_bande_edit', {'id': bande.id}) }}">
+		<i class="fa-solid fa-pen-to-square"></i>
+	</a>
 
-	<table class="table">
+	<table role="grid" class="table">
 		<tbody>
-			<tr>
-				<th>Id</th>
-				<td>{{ bande.id }}</td>
-			</tr>
 			<tr>
 				<th>Nb_poussins</th>
 				<td>{{ bande.nbPoussins }}</td>
 			</tr>
 			<tr>
+				<th>Stock</th>
+				<td>
+					<u>{{ stock }}</u>
+				</td>
+			</tr>
+			<tr>
 				<th>Date_debut</th>
-				<td>{{ bande.dateDebut ? bande.dateDebut|date('Y-m-d') : '' }}</td>
+				<td>{{ bande.dateDebut|date('Y-m-d') }}</td>
 			</tr>
 			<tr>
 				<th>Nb_mortalite</th>
@@ -28,12 +34,16 @@
 	</table>
 
 
-	<h1>Depenses</h1>
-	<table class="table">
+	<h2>Depenses</h2>
+	<a href="{{ path('app_depense_new') }}">
+		<i class="fa-solid fa-plus"></i>
+	</a>
+	<table role="grid" class="table">
 		<tbody>
 			<tr>
 				<th>Description</th>
 				<td>Prix</td>
+				<td>Actions</td>
 			</tr>
 			{% for depense in bande.depenses %}
 				<tr>
@@ -47,14 +57,22 @@
 			{% endfor %}
 			<tr>
 				<th>Total</th>
-				<td>Prix total</td>
+				<td>
+					<mark>
+						{{totalDepense}}
+						FCFA
+					</mark>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 
 
-	<h1>Ventes</h1>
-	<table class="table">
+	<h2>Ventes</h2>
+	<a href="{{ path('app_vente_new') }}">
+		<i class="fa-solid fa-plus"></i>
+	</a>
+	<table role="grid" class="table">
 		<tbody>
 			<tr>
 				<th>Quantite</th>
@@ -73,14 +91,23 @@
 			{% endfor %}
 			<tr>
 				<th>Total</th>
-				<td>Prix total</td>
+				<td>
+					<mark>
+						{{totalVente}}
+						FCFA
+					</mark>
+				</td>
 			</tr>
 		</tbody>
 	</table>
 
-	<a href="{{ path('app_bande_index') }}">back to list</a>
+	<h2>Bilan:</h2>
+	<mark>
+		{{bilan}}
+		FCFA
+	</mark>
 
-	<a href="{{ path('app_bande_edit', {'id': bande.id}) }}">edit</a>
-
-	{{ include('bande/_delete_form.html.twig') }}
+	{# <a href="{{ path('app_bande_index') }}">back to list</a>
+								
+									{{ include('bande/_delete_form.html.twig') }} #}
 {% endblock %}

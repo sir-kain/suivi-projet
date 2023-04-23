@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Bande;
+use App\Entity\Depense;
+use App\Entity\Vente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +39,35 @@ class BandeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function totalDepense(Bande $entity): int
+    {
+        return array_reduce($entity->getDepenses()->toArray(), function ($carry, $item) {
+            /** @var Depense $item */
+            return $carry + $item->getPrix();
+        }, 0);
+    }
+
+    public function totalVente(Bande $entity): int
+    {
+        return array_reduce($entity->getVentes()->toArray(), function ($carry, $item) {
+            /** @var Vente $item */
+            return $carry + $item->getPrix();
+        }, 0);
+    }
+
+    public function bilan($entity): float {
+        return $this->totalVente($entity) - $this->totalDepense($entity);
+    }
+    
+    public function stock(Bande $entity): int
+    {
+        $quantiteTotalVente = array_reduce($entity->getVentes()->toArray(), function ($carry, $item) {
+            /** @var Vente $item */
+            return $carry + $item->getQuantite();
+        }, 0);
+        return $entity->getNbPoussins() - ($entity->getNbMortalite() + $quantiteTotalVente);
     }
 
 //    /**
