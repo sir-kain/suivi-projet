@@ -25,7 +25,7 @@ class Bande
     private ?\DateTimeInterface $date_debut = null;
 
     #[ORM\Column]
-    private ?int $nb_mortalite = null;
+    private int $nb_mortalite = 0;
 
     #[ORM\OneToMany(mappedBy: 'bande', targetEntity: Depense::class, orphanRemoval: true)]
     #[ORM\OrderBy(['created_at' => 'DESC'])]
@@ -34,6 +34,9 @@ class Bande
     #[ORM\OneToMany(mappedBy: 'bande', targetEntity: Vente::class, orphanRemoval: true)]
     #[ORM\OrderBy(['created_at' => 'DESC'])]
     private Collection $ventes;
+
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $date_cloture = null;
 
     public function __construct()
     {
@@ -70,7 +73,7 @@ class Bande
         return $this;
     }
 
-    public function getNbMortalite(): ?int
+    public function getNbMortalite(): int
     {
         return $this->nb_mortalite;
     }
@@ -152,5 +155,17 @@ class Bande
         $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
         $date = $formatter->format($this->getDateDebut());
         return  "Bande {$this->nb_poussins} du $date";
+    }
+
+    public function getDateCloture(): ?\DateTimeInterface
+    {
+        return $this->date_cloture;
+    }
+
+    public function setDateCloture(?\DateTimeInterface $date_cloture): self
+    {
+        $this->date_cloture = $date_cloture;
+
+        return $this;
     }
 }

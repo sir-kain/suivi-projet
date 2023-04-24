@@ -6,7 +6,7 @@
 {% block body %}
 	<h1>Bande du
 		{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
-	<a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)">
+	<a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)" data-tooltip="Editer les infos de la bande">
 		<i class="fa-solid fa-pen-to-square"></i>
 	</a>
 
@@ -45,7 +45,7 @@
 
 
 	<h2>Dépenses</h2>
-	<a href="#" data-target="modal-add-depense" onclick="toggleModal(event)">
+	<a href="#" data-target="modal-add-depense" onclick="toggleModal(event)" data-tooltip="Renseigner une depense">
 		<i class="fa-solid fa-plus"></i>
 	</a>
 	<table role="grid" class="table">
@@ -63,7 +63,7 @@
 						FCFA</td>
 					<td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
 					<td class="actions">
-						<a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline">
+						<a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline" data-tooltip="Modifier cette depense">
 							<i class="fa-solid fa-pen-to-square"></i>
 						</a>
 						{{ include('depense/_delete_form.html.twig') }}
@@ -84,7 +84,7 @@
 
 
 	<h2>Ventes</h2>
-	<a href="#" data-target="modal-add-vente" onclick="toggleModal(event)">
+	<a href="#" data-target="modal-add-vente" onclick="toggleModal(event)" data-tooltip="Renseigner une vente">
 		<i class="fa-solid fa-plus"></i>
 	</a>
 	<table role="grid" class="table">
@@ -102,7 +102,7 @@
 						FCFA</td>
 					<td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
 					<td class="actions">
-						<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline">
+						<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline" data-tooltip="Modifier la vente">
 							<i class="fa-solid fa-pen-to-square"></i>
 						</a>
 						{{ include('vente/_delete_form.html.twig') }}

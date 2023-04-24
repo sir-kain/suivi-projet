@@ -8,7 +8,8 @@ h2 {
 }
 
 .warning {
-  color: #ffffcc;
+  color: #d81b60;
+  border-color: #d81b60;
 }
 
 .success {
@@ -32,11 +33,11 @@ table td.actions button i {
   font-size: 0.7rem;
 }
 
-dialog div:has(> [name="depense[bande]"]), dialog div:has(> [name="vente[bande]"]) {
+dialog div:has(> [name="depense[bande]"]),
+dialog div:has(> [name="vente[bande]"]) {
   display: none;
 }
 
 /* dialog div:has(> #depense_created_at), dialog div:has(> #vente_created_at) {
   display: none;
 } */
-

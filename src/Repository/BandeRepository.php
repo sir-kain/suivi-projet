@@ -35,6 +35,16 @@ class BandeRepository extends ServiceEntityRepository
     public function findLatest()
     {
         $qb = $this->createQueryBuilder('p')
+            ->where('p.date_cloture IS NULL')
+            ->orderBy('p.date_debut', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findLatestCloture()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->where('p.date_cloture IS NOT NULL')
             ->orderBy('p.date_debut', 'DESC');
 
         return $qb->getQuery()->getResult();

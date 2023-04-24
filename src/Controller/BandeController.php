@@ -23,6 +23,7 @@ class BandeController extends AbstractController
     {
         return $this->render('bande/index.html.twig', [
             'bandes' => $bandeRepository->findLatest(),
+            'bandesCloture' => $bandeRepository->findLatestCloture(),
         ]);
     }
 
@@ -79,6 +80,7 @@ class BandeController extends AbstractController
     public function edit(Request $request, Bande $bande, BandeRepository $bandeRepository): Response
     {
         $form = $this->createForm(BandeType::class, $bande);
+        // dd($request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -91,6 +93,14 @@ class BandeController extends AbstractController
             'bande' => $bande,
             'formBande' => $form,
         ]);
+    }
+
+    #[Route('/{id}/cloture', name: 'app_bande_cloture', methods: ['POST'])]
+    public function cloture(Request $request, Bande $bande, BandeRepository $bandeRepository): Response
+    {
+        $bande->setDateCloture(new DateTime($request->get('date_cloture')));
+        $bandeRepository->save($bande, true);
+        return $this->redirectToRoute('app_bande_index', [], Response::HTTP_SEE_OTHER);
     }
 
     #[Route('/{id}', name: 'app_bande_delete', methods: ['POST'])]
