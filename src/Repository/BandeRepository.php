@@ -32,6 +32,14 @@ class BandeRepository extends ServiceEntityRepository
         }
     }
 
+    public function findLatest()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->orderBy('p.date_debut', 'DESC');
+
+        return $qb->getQuery()->getResult();
+    }
+
     public function remove(Bande $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
@@ -57,10 +65,11 @@ class BandeRepository extends ServiceEntityRepository
         }, 0);
     }
 
-    public function bilan($entity): float {
+    public function bilan($entity): float
+    {
         return $this->totalVente($entity) - $this->totalDepense($entity);
     }
-    
+
     public function stock(Bande $entity): int
     {
         $quantiteTotalVente = array_reduce($entity->getVentes()->toArray(), function ($carry, $item) {
@@ -70,28 +79,28 @@ class BandeRepository extends ServiceEntityRepository
         return $entity->getNbPoussins() - ($entity->getNbMortalite() + $quantiteTotalVente);
     }
 
-//    /**
-//     * @return Bande[] Returns an array of Bande objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('b.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    //    /**
+    //     * @return Bande[] Returns an array of Bande objects
+    //     */
+    //    public function findByExampleField($value): array
+    //    {
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->orderBy('b.id', 'ASC')
+    //            ->setMaxResults(10)
+    //            ->getQuery()
+    //            ->getResult()
+    //        ;
+    //    }
 
-//    public function findOneBySomeField($value): ?Bande
-//    {
-//        return $this->createQueryBuilder('b')
-//            ->andWhere('b.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    //    public function findOneBySomeField($value): ?Bande
+    //    {
+    //        return $this->createQueryBuilder('b')
+    //            ->andWhere('b.exampleField = :val')
+    //            ->setParameter('val', $value)
+    //            ->getQuery()
+    //            ->getOneOrNullResult()
+    //        ;
+    //    }
 }

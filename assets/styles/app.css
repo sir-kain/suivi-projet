@@ -36,7 +36,7 @@ dialog div:has(> [name="depense[bande]"]), dialog div:has(> [name="vente[bande]"
   display: none;
 }
 
-dialog div:has(> #depense_created_at), dialog div:has(> #vente_created_at) {
+/* dialog div:has(> #depense_created_at), dialog div:has(> #vente_created_at) {
   display: none;
-}
+} */
 

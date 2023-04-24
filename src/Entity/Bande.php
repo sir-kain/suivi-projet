@@ -20,8 +20,6 @@ class Bande
 
     #[ORM\Column]
     private ?int $nb_poussins = null;
-    
-    private ?int $stock = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_debut = null;
@@ -30,9 +28,11 @@ class Bande
     private ?int $nb_mortalite = null;
 
     #[ORM\OneToMany(mappedBy: 'bande', targetEntity: Depense::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['created_at' => 'DESC'])]
     private Collection $depenses;
 
     #[ORM\OneToMany(mappedBy: 'bande', targetEntity: Vente::class, orphanRemoval: true)]
+    #[ORM\OrderBy(['created_at' => 'DESC'])]
     private Collection $ventes;
 
     public function __construct()

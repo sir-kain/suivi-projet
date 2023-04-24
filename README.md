@@ -5,7 +5,7 @@
 
 - [X] Formatter les dates.
 
-- [ ] Afficher les listes par ordre de derniere creation.
+- [X] Afficher les listes par ordre de derniere creation.
 
 - [X] Mettre des libelles claires pour la presentation de l'app
 

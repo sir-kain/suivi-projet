@@ -9,6 +9,7 @@ use App\Form\BandeType;
 use App\Form\DepenseType;
 use App\Form\VenteType;
 use App\Repository\BandeRepository;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ class BandeController extends AbstractController
     public function index(BandeRepository $bandeRepository): Response
     {
         return $this->render('bande/index.html.twig', [
-            'bandes' => $bandeRepository->findAll(),
+            'bandes' => $bandeRepository->findLatest(),
         ]);
     }
 
@@ -29,6 +30,8 @@ class BandeController extends AbstractController
     public function new(Request $request, BandeRepository $bandeRepository): Response
     {
         $bande = new Bande();
+        $bande->setDateDebut(new DateTime());
+        $bande->setNbMortalite(0);
         $form = $this->createForm(BandeType::class, $bande);
         $form->handleRequest($request);
 
@@ -47,9 +50,18 @@ class BandeController extends AbstractController
     #[Route('/{id}', name: 'app_bande_show', methods: ['GET'])]
     public function show(Bande $bande, BandeRepository $bandeRepository): Response
     {
+        // Form bande
         $formBande = $this->createForm(BandeType::class, $bande, ['action' => $this->generateUrl('app_bande_edit', ['id' => $bande->getId()])]);
-        $formDepense = $this->createForm(DepenseType::class, new Depense(), ['action' => $this->generateUrl('app_depense_new')]);
-        $formVente = $this->createForm(VenteType::class, new Vente(), ['action' => $this->generateUrl('app_vente_new')]);
+        // Form depense
+        $depense = new Depense();
+        $depense->setCreatedAt(new DateTime());
+        $depense->setBande($bande);
+        $formDepense = $this->createForm(DepenseType::class, $depense, ['action' => $this->generateUrl('app_depense_new')]);
+        // Form vente
+        $vente = new Vente();
+        $vente->setCreatedAt(new DateTime());
+        $vente->setBande($bande);
+        $formVente = $this->createForm(VenteType::class, $vente, ['action' => $this->generateUrl('app_vente_new')]);
 
         return $this->render('bande/show.html.twig', [
             'bande' => $bande,
