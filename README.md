@@ -1,6 +1,6 @@
 # suivi-projet
 
-## TODO
+## TODO 1er MVP
 
 - [x] Formatter les dates.
 
