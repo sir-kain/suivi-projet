@@ -168,4 +168,9 @@ class Bande
 
         return $this;
     }
+
+    public function isClotured(): bool
+    {
+        return $this->date_cloture !== null;
+    }
 }
