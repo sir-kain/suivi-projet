@@ -12,7 +12,7 @@
 
 - [x] Page detail bande: Utiliser des accordions sur les ventes et depenses
 
-- [ ] Calculer et afficher la duree en jour d'une bande, Tenir en compte la date de cloture.
+- [x] Calculer et afficher la duree en jour d'une bande, Tenir en compte la date de cloture.
 
 - [x] Gerer cloture bande
 

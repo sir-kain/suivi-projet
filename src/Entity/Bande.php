@@ -87,6 +87,9 @@ class Bande
 
     public function getNbJours(): ?int
     {
+        if ($this->isClotured()) {
+            return date_diff($this->getDateCloture(), $this->getDateDebut())->days;
+        }
         return date_diff(new DateTime(), $this->getDateDebut())->days;
     }
 

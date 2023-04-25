@@ -20,8 +20,11 @@
 			</tr>
 			<tr>
 				<th>Date démarrage</th>
-
 				<td>{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
+			</tr>
+			<tr>
+				<th>Durée (en jours)</th>
+				<td>{{ bande.nbJours }} jours</td>
 			</tr>
 			<tr>
 				<th>Mortalités</th>
