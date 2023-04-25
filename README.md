@@ -10,7 +10,7 @@
 
 - [x] Faire un seul champs pour les date `input:date`
 
-- [ ] Page detail bande: Utiliser des accordions sur les ventes et depenses
+- [x] Page detail bande: Utiliser des accordions sur les ventes et depenses
 
 - [ ] Calculer et afficher la duree en jour d'une bande, Tenir en compte la date de cloture.
 
