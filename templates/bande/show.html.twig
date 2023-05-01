@@ -115,7 +115,6 @@
                 <th>Nombre de poulets</th>
                 <td>Prix</td>
                 <td>Client</td>
-                <td>Details de la vente</td>
                 <td>Date</td>
                 <td>Actions</td>
             </tr>
@@ -126,31 +125,15 @@
                         FCFA
                     </td>
                     <td>{{ vente.client }}</td>
-                    <td>
-                        {% if vente.description is not empty %}
-                            <a href="#" onclick="toggleModal(event)"
-                               data-target="modal-detail-vente-{{ vente.id }}"
-                               data-tooltip="Consulter les details">
-                                Consulter les details
-                            </a>
-                            <dialog id="modal-detail-vente-{{ vente.id }}">
-                                <article>
-                                    <a href="#close" aria-label="Close" class="close"
-                                       data-target="modal-detail-vente-{{ vente.id }}"
-                                       onclick="toggleModal(event)"></a>
-                                    <h3>Details de la vente!</h3>
-                                    <blockquote>
-                                        {{ vente.description }}
-                                    </blockquote>
-                                </article>
-                            </dialog>
-                        {% endif %}
-                    </td>
                     <td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
                     <td class="actions">
+                        <a href="#" role="button" class="outline" data-tooltip="Consulter les details de la vente"
+                           onclick="toggleModal(event)" data-vente-id="{{ vente.id }}" data-target="modal-detail-vente">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
                         <a href="#" onclick="toggleModal(event)" data-vente-id="{{ vente.id }}"
-                           data-target="modal-edit-vente"
-                           role="button" class="outline" data-tooltip="Modifier la vente">
+                           data-target="modal-edit-vente" role="button" class="outline"
+                           data-tooltip="Modifier la vente">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         {{ include('vente/_delete_form.html.twig') }}
@@ -211,6 +194,16 @@
             <a href="#close" aria-label="Close" class="close" data-target="modal-edit-vente"
                onclick="toggleModal(event)"></a>
             <h3>Modifier la vente!</h3>
+        </article>
+    </dialog>
+
+    <!-- Modal -->
+    <dialog id="modal-detail-vente">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-detail-vente"
+               onclick="toggleModal(event)"></a>
+            <h3>Details vente!</h3>
+            <table role="grid" class="table"></table>
         </article>
     </dialog>
 {% endblock %}

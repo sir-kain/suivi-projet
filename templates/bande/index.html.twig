@@ -28,7 +28,7 @@
 						<td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
 						<td>{{ bande.nbMortalite }}</td>
 						<td class="actions">
-							<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline" data-tooltip="Consulter les details la bande">
+							<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline" data-tooltip="Consulter les details de la bande">
 								<i class="fa-regular fa-eye"></i>
 							</a>
 							<a href="{{ path('app_bande_edit', {'id': bande.id}) }}" role="button" class="outline" data-tooltip="Editer les infos de la bande">
