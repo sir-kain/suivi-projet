@@ -78,8 +78,13 @@
                     </td>
                     <td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
                     <td class="actions">
-                        <a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline"
-                           data-tooltip="Modifier cette depense">
+                        <a href="#" role="button" class="outline" data-tooltip="Consulter les details de la depense"
+                           onclick="toggleModal(event)" data-depense-id="{{ depense.id }}" data-target="modal-detail-depense">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                        <a href="#" onclick="toggleModal(event)" data-depense-id="{{ depense.id }}"
+                           data-target="modal-edit-depense" role="button" class="outline"
+                           data-tooltip="Modifier la depense">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
                         {{ include('depense/_delete_form.html.twig') }}
@@ -175,6 +180,25 @@
                onclick="toggleModal(event)"></a>
             <h3>Renseigner une nouvelle dépense!</h3>
             {{ include('depense/_form.html.twig') }}
+        </article>
+    </dialog>
+
+    <!-- Modal -->
+    <dialog id="modal-edit-depense">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense"
+               onclick="toggleModal(event)"></a>
+            <h3>Modifier la depense!</h3>
+        </article>
+    </dialog>
+
+    <!-- Modal -->
+    <dialog id="modal-detail-depense">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-detail-depense"
+               onclick="toggleModal(event)"></a>
+            <h3>Details depense!</h3>
+            <table role="grid" class="table"></table>
         </article>
     </dialog>
 

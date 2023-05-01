@@ -13,19 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/depense')]
 class DepenseController extends AbstractController
 {
-    #[Route('/', name: 'app_depense_index', methods: ['GET'])]
-    public function index(DepenseRepository $depenseRepository): Response
-    {
-        return $this->render('depense/index.html.twig', [
-            'depenses' => $depenseRepository->findAll(),
-        ]);
-    }
+//    #[Route('/', name: 'app_depense_index', methods: ['GET'])]
+//    public function index(DepenseRepository $depenseRepository): Response
+//    {
+//        return $this->render('depense/index.html.twig', [
+//            'depenses' => $depenseRepository->findAll(),
+//        ]);
+//    }
 
     #[Route('/new', name: 'app_depense_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DepenseRepository $depenseRepository): Response
     {
         $depense = new Depense();
-        $form = $this->createForm(DepenseType::class, $depense);
+        $form = $this->createForm(DepenseType::class, $depense, ['action' => $this->generateUrl('app_depense_new')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -34,7 +34,7 @@ class DepenseController extends AbstractController
             return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('depense/new.html.twig', [
+        return $this->render('depense/_form.html.twig', [
             'depense' => $depense,
             'formDepense' => $form,
         ]);
@@ -51,16 +51,16 @@ class DepenseController extends AbstractController
     #[Route('/{id}/edit', name: 'app_depense_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Depense $depense, DepenseRepository $depenseRepository): Response
     {
-        $form = $this->createForm(DepenseType::class, $depense);
+        $form = $this->createForm(DepenseType::class, $depense, ['action' => $this->generateUrl('app_depense_edit', ['id' => $depense->getId()])]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $depenseRepository->save($depense, true);
 
-            return $this->redirectToRoute('app_depense_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('depense/edit.html.twig', [
+        return $this->render('depense/_form.html.twig', [
             'depense' => $depense,
             'formDepense' => $form,
         ]);
