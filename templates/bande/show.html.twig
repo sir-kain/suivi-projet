@@ -4,168 +4,213 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Bande du
-		{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
-	{% if not bande.isClotured %}
-		<a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)" data-tooltip="Editer les infos de la bande">
-			<i class="fa-solid fa-pen-to-square"></i>
-		</a>
-	{% endif %}
+    <h1>Bande du
+        {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
+    {% if not bande.isClotured %}
+        <a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)"
+           data-tooltip="Editer les infos de la bande">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+    {% endif %}
 
-	<table role="grid" class="table">
-		<tbody>
-			<tr>
-				<th>Nombre de poussins</th>
-				<td>{{ bande.nbPoussins }}</td>
-			</tr>
-			<tr>
-				<th>Date démarrage</th>
-				<td>{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
-			</tr>
-			<tr>
-				<th>Durée (en jours)</th>
-				<td>{{ bande.nbJours }} jours</td>
-			</tr>
-			<tr>
-				<th>Mortalités</th>
-				<td>{{ bande.nbMortalite }}</td>
-			</tr>
-			<tr>
-				<th>Quantité en stock</th>
-				<td>
-					<mark>{{ stock }}</mark>
-				</td>
-			</tr>
-			<tr>
-				<th>Bilan</th>
-				<td>
-					<mark>
-						{{bilan}}
-						FCFA
-					</mark>
-				</td>
-			</tr>
-		</tbody>
-	</table>
+    <table role="grid" class="table">
+        <tbody>
+        <tr>
+            <th>Nombre de poussins</th>
+            <td>{{ bande.nbPoussins }}</td>
+        </tr>
+        <tr>
+            <th>Date démarrage</th>
+            <td>{{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
+        </tr>
+        <tr>
+            <th>Durée (en jours)</th>
+            <td>{{ bande.nbJours }}
+                jours
+            </td>
+        </tr>
+        <tr>
+            <th>Mortalités</th>
+            <td>{{ bande.nbMortalite }}</td>
+        </tr>
+        <tr>
+            <th>Quantité en stock</th>
+            <td>
+                <mark>{{ stock }}</mark>
+            </td>
+        </tr>
+        <tr>
+            <th>Bilan</th>
+            <td>
+                <mark>
+                    {{ bilan }}
+                    FCFA
+                </mark>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
-	<details>
-		<summary role="button" class="secondary">
-			Dépenses
-			{% if not bande.isClotured %}
-				<a href="#" data-target="modal-add-depense" onclick="toggleModal(event)" data-tooltip="Renseigner une depense">
-					<i class="fa-solid fa-plus"></i>
-				</a>
-			{% endif %}
-		</summary>
+    <details>
+        <summary role="button" class="secondary">
+            Dépenses
+            {% if not bande.isClotured %}
+                <a href="#" data-target="modal-add-depense" onclick="toggleModal(event)"
+                   data-tooltip="Renseigner une dépense">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            {% endif %}
+        </summary>
 
-		<table role="grid" class="table">
-			<tbody>
-				<tr>
-					<th>Description</th>
-					<td>Prix</td>
-					<td>Date</td>
-					<td>Actions</td>
-				</tr>
-				{% for depense in bande.depenses %}
-					<tr>
-						<th>{{ depense.description }}</th>
-						<td>{{ depense.prix }}
-							FCFA</td>
-						<td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
-						<td class="actions">
-							<a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline" data-tooltip="Modifier cette depense">
-								<i class="fa-solid fa-pen-to-square"></i>
-							</a>
-							{{ include('depense/_delete_form.html.twig') }}
-						</td>
-					</tr>
-				{% endfor %}
-				<tr>
-					<th>Total</th>
-					<td>
-						<mark>
-							{{totalDepense}}
-							FCFA
-						</mark>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</details>
+        <table role="grid" class="table">
+            <tbody>
+            <tr>
+                <th>Description</th>
+                <td>Prix</td>
+                <td>Date</td>
+                <td>Actions</td>
+            </tr>
+            {% for depense in bande.depenses %}
+                <tr>
+                    <th>{{ depense.description }}</th>
+                    <td>{{ depense.prix }}
+                        FCFA
+                    </td>
+                    <td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
+                    <td class="actions">
+                        <a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline"
+                           data-tooltip="Modifier cette depense">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        {{ include('depense/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Total</th>
+                <td>
+                    <mark>
+                        {{ totalDepense }}
+                        FCFA
+                    </mark>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
 
-	<details>
-		<summary role="button" class="secondary">
-			Ventes
-			{% if not bande.isClotured %}
-				<a href="#" data-target="modal-add-vente" onclick="toggleModal(event)" data-tooltip="Renseigner une vente">
-					<i class="fa-solid fa-plus"></i>
-				</a>
-			{% endif %}
-		</summary>
-		<table role="grid" class="table">
-			<tbody>
-				<tr>
-					<th>Quantité (Nombre de poulets)</th>
-					<td>Prix</td>
-					<td>Date</td>
-					<td>Actions</td>
-				</tr>
-				{% for vente in bande.ventes %}
-					<tr>
-						<th>{{ vente.quantite }}</th>
-						<td>{{ vente.prix }}
-							FCFA</td>
-						<td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
-						<td class="actions">
-							<a href="{{ path('app_vente_edit', {'id': vente.id}) }}" role="button" class="outline" data-tooltip="Modifier la vente">
-								<i class="fa-solid fa-pen-to-square"></i>
-							</a>
-							{{ include('vente/_delete_form.html.twig') }}
-						</td>
-					</tr>
-				{% endfor %}
-				<tr>
-					<th>Total</th>
-					<td>
-						<mark>
-							{{totalVente}}
-							FCFA
-						</mark>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</details>
-	<h2>Bilan:</h2>
-	<mark>
-		{{bilan}}
-		FCFA
-	</mark>
+    <details>
+        <summary role="button" class="secondary">
+            Ventes
+            {% if not bande.isClotured %}
+                <a href="#" data-target="modal-add-vente" onclick="toggleModal(event)"
+                   data-tooltip="Renseigner une vente">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
+            {% endif %}
+        </summary>
+        <table role="grid" class="table">
+            <tbody>
+            <tr>
+                <th>Nombre de poulets</th>
+                <td>Prix</td>
+                <td>Client</td>
+                <td>Details de la vente</td>
+                <td>Date</td>
+                <td>Actions</td>
+            </tr>
+            {% for vente in bande.ventes %}
+                <tr>
+                    <th>{{ vente.quantite }}</th>
+                    <td>{{ vente.prix }}
+                        FCFA
+                    </td>
+                    <td>{{ vente.client }}</td>
+                    <td>
+                        {% if vente.description is not empty %}
+                            <a href="#" onclick="toggleModal(event)"
+                               data-target="modal-detail-vente-{{ vente.id }}"
+                               data-tooltip="Consulter les details">
+                                Consulter les details
+                            </a>
+                            <dialog id="modal-detail-vente-{{ vente.id }}">
+                                <article>
+                                    <a href="#close" aria-label="Close" class="close"
+                                       data-target="modal-detail-vente-{{ vente.id }}"
+                                       onclick="toggleModal(event)"></a>
+                                    <h3>Details de la vente!</h3>
+                                    <blockquote>
+                                        {{ vente.description }}
+                                    </blockquote>
+                                </article>
+                            </dialog>
+                        {% endif %}
+                    </td>
+                    <td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
+                    <td class="actions">
+                        <a href="#" onclick="toggleModal(event)" data-vente-id="{{ vente.id }}"
+                           data-target="modal-edit-vente"
+                           role="button" class="outline" data-tooltip="Modifier la vente">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        {{ include('vente/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+            {% endfor %}
+            <tr>
+                <th>Total</th>
+                <td>
+                    <mark>
+                        {{ totalVente }}
+                        FCFA
+                    </mark>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </details>
+    <h2>Bilan:</h2>
+    <mark>
+        {{ bilan }}
+        FCFA
+    </mark>
 
-	<!-- Modal -->
-	<dialog id="modal-edit-bande">
-		<article>
-			<a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande" onclick="toggleModal(event)"></a>
-			<h3>Editer les infos de la bande!</h3>
-			{{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
-		</article>
-	</dialog>
+    <!-- Modal -->
+    <dialog id="modal-edit-bande">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande"
+               onclick="toggleModal(event)"></a>
+            <h3>Editer les infos de la bande!</h3>
+            {{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
+        </article>
+    </dialog>
 
-	<!-- Modal -->
-	<dialog id="modal-add-depense">
-		<article>
-			<a href="#close" aria-label="Close" class="close" data-target="modal-add-depense" onclick="toggleModal(event)"></a>
-			<h3>Renseigner une nouvelle dépense!</h3>
-			{{ include('depense/_form.html.twig') }}
-		</article>
-	</dialog>
+    <!-- Modal -->
+    <dialog id="modal-add-depense">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-add-depense"
+               onclick="toggleModal(event)"></a>
+            <h3>Renseigner une nouvelle dépense!</h3>
+            {{ include('depense/_form.html.twig') }}
+        </article>
+    </dialog>
 
-	<!-- Modal -->
-	<dialog id="modal-add-vente">
-		<article>
-			<a href="#close" aria-label="Close" class="close" data-target="modal-add-vente" onclick="toggleModal(event)"></a>
-			<h3>Renseigner une nouvelle vente!</h3>
-			{{ include('vente/_form.html.twig') }}
-		</article>
-	</dialog>
+    <!-- Modal -->
+    <dialog id="modal-add-vente">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-add-vente"
+               onclick="toggleModal(event)"></a>
+            <h3>Renseigner une nouvelle vente!</h3>
+            {{ include('vente/_form.html.twig') }}
+        </article>
+    </dialog>
+
+    <!-- Modal -->
+    <dialog id="modal-edit-vente">
+        <article>
+            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-vente"
+               onclick="toggleModal(event)"></a>
+            <h3>Modifier la vente!</h3>
+        </article>
+    </dialog>
 {% endblock %}

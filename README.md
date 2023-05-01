@@ -16,7 +16,9 @@
 
 - [x] Gerer cloture bande
 
-- [ ] Ajouter les colonnes description et client a la vente
+- [x] Ajouter les colonnes description et client a la vente
+
+- [ ] Afficher les details de la vente sur une modale
 
 La description servira a expliquer les raisons du prix de vente dans certains cas (frais supplementaires, etc.).
 
@@ -26,12 +28,21 @@ La description servira a expliquer les raisons du prix de vente dans certains ca
 
 - [ ] Gestion stock
 
-Valider les donnees entre le nombre de mortalite, les ventes et le stock. Pour ne pas avoir de faux calculs. Afficher des message flash en consequense
+Valider les donnees entre le nombre de mortalite, les ventes et le stock. Pour ne pas avoir de faux calculs. Afficher
+des message flash en consequense
 
-- [ ] Gestion compte bancaire
+- [ ] Gestion compte bancaire (Gestion des avoir)
 
 - [ ] Gestion authentification
 
 - [ ] Envoie mail sur toute action
 
 - [ ] Deploiement sur Heroku
+
+## Commandes
+
+```bash
+php bin/console dbal:run-sql 'SELECT * FROM bande'
+```
+
+http://localhost:18080/?pgsql=database&username=app&db=app&ns=public

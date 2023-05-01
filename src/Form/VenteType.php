@@ -13,13 +13,19 @@ class VenteType extends AbstractType
     {
         $builder
             ->add('quantite', null, [
-                'label' => 'Nombre de poulets',
+                'label' => 'Nombre de poulets:',
             ])
             ->add('prix', null, [
-                'label' => 'Prix',
+                'label' => 'Prix:',
+            ])
+            ->add('client', null, [
+                'label' => 'Nom du client:',
+            ])
+            ->add('description', null, [
+                'label' => 'Détails supplementaires sur la vente:',
             ])
             ->add('created_at', null, [
-                'label' => 'Créée le',
+                'label' => 'Date de la vente:',
                 'widget' => 'single_text',
             ])
             ->add('bande');

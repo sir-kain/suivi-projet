@@ -25,7 +25,7 @@ class VenteController extends AbstractController
     public function new(Request $request, VenteRepository $venteRepository): Response
     {
         $vente = new Vente();
-        $form = $this->createForm(VenteType::class, $vente);
+        $form = $this->createForm(VenteType::class, $vente, ['action' => $this->generateUrl('app_vente_new')]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -34,9 +34,9 @@ class VenteController extends AbstractController
             return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('vente/new.html.twig', [
+        return $this->render('vente/_form.html.twig', [
             'vente' => $vente,
-            'form' => $form,
+            'formVente' => $form->createView(),
         ]);
     }
 
@@ -51,7 +51,7 @@ class VenteController extends AbstractController
     #[Route('/{id}/edit', name: 'app_vente_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Vente $vente, VenteRepository $venteRepository): Response
     {
-        $form = $this->createForm(VenteType::class, $vente);
+        $form = $this->createForm(VenteType::class, $vente, ['action' => $this->generateUrl('app_vente_edit', ['id' => $vente->getId()])]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -59,8 +59,8 @@ class VenteController extends AbstractController
 
             return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
         }
-        
-        return $this->renderForm('vente/edit.html.twig', [
+
+        return $this->render('vente/_form.html.twig', [
             'vente' => $vente,
             'formVente' => $form,
         ]);
@@ -69,10 +69,10 @@ class VenteController extends AbstractController
     #[Route('/{id}', name: 'app_vente_delete', methods: ['POST'])]
     public function delete(Request $request, Vente $vente, VenteRepository $venteRepository): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$vente->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $vente->getId(), $request->request->get('_token'))) {
             $venteRepository->remove($vente, true);
         }
-        
+
         return $this->redirectToRoute('app_bande_show', ['id' => $vente->getBande()->getId()], Response::HTTP_SEE_OTHER);
     }
 }

@@ -80,7 +80,6 @@ class BandeController extends AbstractController
     public function edit(Request $request, Bande $bande, BandeRepository $bandeRepository): Response
     {
         $form = $this->createForm(BandeType::class, $bande);
-        // dd($request);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
