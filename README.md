@@ -18,7 +18,7 @@
 
 - [x] Ajouter les colonnes description et client a la vente
 
-- [ ] Afficher les details de la vente sur une modale
+- [x] Afficher les details de la vente et depense sur une modale
 
 La description servira a expliquer les raisons du prix de vente dans certains cas (frais supplementaires, etc.).
 

@@ -4,102 +4,108 @@
 {% endblock %}
 
 {% block body %}
-	<h1>Bandes en cours</h1>
-	<a href="{{ path('app_bande_new') }}" data-tooltip="Demarrer une nouvelle bande">
-		<i class="fa-solid fa-plus"></i>
-	</a>
+    <h1>Bandes en cours</h1>
+    <a href="{{ path('app_bande_new') }}" data-tooltip="Demarrer une nouvelle bande">
+        <i class="fa-solid fa-plus"></i>
+    </a>
 
-	<figure>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Nombre de poussins</th>
-					<th>Date démarrage</th>
-					<th>Mortalites</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for bande in bandes %}
-					<tr>
-						<td>{{ bande.id }}</td>
-						<td>{{ bande.nbPoussins }}</td>
-						<td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
-						<td>{{ bande.nbMortalite }}</td>
-						<td class="actions">
-							<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline" data-tooltip="Consulter les details de la bande">
-								<i class="fa-regular fa-eye"></i>
-							</a>
-							<a href="{{ path('app_bande_edit', {'id': bande.id}) }}" role="button" class="outline" data-tooltip="Editer les infos de la bande">
-								<i class="fa-solid fa-pen-to-square"></i>
-							</a>
-							<a href="#" role="button" class="outline warning" data-target="modal-cloture-bande-{{bande.id}}" onclick="toggleModal(event)" data-tooltip="Cloturer la bande">
-								<i class="fa-regular fa-hourglass"></i>
-							</a>
-							<!-- Modal -->
-							<dialog id="modal-cloture-bande-{{bande.id}}">
-								<article>
-									<a href="#close" aria-label="Close" class="close" data-target="modal-cloture-bande-{{bande.id}}" onclick="toggleModal(event)"></a>
-									<h3>Cloturer la bande du
-										{{bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY")}}!</h3>
-									<form name="bande" action="{{ path('app_bande_cloture', {'id': bande.id}) }}" method="POST">
-										<div>
-											<label for="date_cloture" class="required">Cloturée le</label>
-											<input type="date" id="date_cloture" name="date_cloture" required="required">
-										</div>
-										<button class="outline">
-											Cloturer
-											<i class="fa-regular fa-hourglass"></i>
-										</button>
-									</form>
-								</article>
-							</dialog>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="5">Pas de bandes actuellement</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</figure>
+    <figure>
+        <table class="table" role="grid">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre de poussins</th>
+                <th>Date démarrage</th>
+                <th>Mortalites</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for bande in bandes %}
+                <tr>
+                    <td>{{ bande.id }}</td>
+                    <td>{{ bande.nbPoussins }}</td>
+                    <td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
+                    <td>{{ bande.nbMortalite }}</td>
+                    <td class="actions">
+                        <a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline"
+                           data-tooltip="Consulter les details de la bande">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                        <a href="{{ path('app_bande_edit', {'id': bande.id}) }}" role="button" class="outline"
+                           data-tooltip="Editer les infos de la bande">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="#" role="button" class="outline warning"
+                           data-target="modal-cloture-bande-{{ bande.id }}" onclick="toggleModal(event)"
+                           data-tooltip="Cloturer la bande">
+                            <i class="fa-regular fa-hourglass"></i>
+                        </a>
+                        <!-- Modal -->
+                        <dialog id="modal-cloture-bande-{{ bande.id }}">
+                            <article>
+                                <a href="#close" aria-label="Close" class="close"
+                                   data-target="modal-cloture-bande-{{ bande.id }}" onclick="toggleModal(event)"></a>
+                                <h3>Cloturer la bande du
+                                    {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}!</h3>
+                                <form name="bande" action="{{ path('app_bande_cloture', {'id': bande.id}) }}"
+                                      method="POST">
+                                    <div>
+                                        <label for="date_cloture" class="required">Cloturée le</label>
+                                        <input type="date" id="date_cloture" name="date_cloture" required="required">
+                                    </div>
+                                    <button class="outline">
+                                        Cloturer
+                                        <i class="fa-regular fa-hourglass"></i>
+                                    </button>
+                                </form>
+                            </article>
+                        </dialog>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas de bandes actuellement</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </figure>
 
-	<h2>Bandes cloturées</h2>
+    <h2>Bandes cloturées</h2>
 
-	<figure>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Nombre de poussins</th>
-					<th>Date démarrage</th>
-					<th>Date de cloture</th>
-					<th>Mortalites</th>
-					<th>Actions</th>
-				</tr>
-			</thead>
-			<tbody>
-				{% for bande in bandesCloture %}
-					<tr>
-						<td>{{ bande.id }}</td>
-						<td>{{ bande.nbPoussins }}</td>
-						<td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
-						<td>{{ bande.dateDebut ? bande.dateCloture|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
-						<td>{{ bande.nbMortalite }}</td>
-						<td class="actions">
-							<a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline">
-								<i class="fa-regular fa-eye"></i>
-							</a>
-						</td>
-					</tr>
-				{% else %}
-					<tr>
-						<td colspan="5">Pas de bandes cloturées actuellement</td>
-					</tr>
-				{% endfor %}
-			</tbody>
-		</table>
-	</figure>
+    <figure>
+        <table class="table" role="grid">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre de poussins</th>
+                <th>Date démarrage</th>
+                <th>Date de cloture</th>
+                <th>Mortalites</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for bande in bandesCloture %}
+                <tr>
+                    <td>{{ bande.id }}</td>
+                    <td>{{ bande.nbPoussins }}</td>
+                    <td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
+                    <td>{{ bande.dateDebut ? bande.dateCloture|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
+                    <td>{{ bande.nbMortalite }}</td>
+                    <td class="actions">
+                        <a href="{{ path('app_bande_show', {'id': bande.id}) }}" role="button" class="outline">
+                            <i class="fa-regular fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas de bandes cloturées actuellement</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </figure>
 {% endblock %}
