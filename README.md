@@ -33,7 +33,7 @@ des message flash en consequense
 
 - [ ] Gestion compte bancaire (Gestion des avoir)
 
-- [ ] Gestion authentification
+- [x] Gestion authentification
 
 - [ ] Envoie mail sur toute action
 
@@ -42,7 +42,15 @@ des message flash en consequense
 ## Commandes
 
 ```bash
-php bin/console dbal:run-sql 'SELECT * FROM bande'
+symfony console dbal:run-sql 'SELECT * FROM bande'
+```
+
+```bash
+symfony console make:migration
+```
+
+```bash
+symfony console doctrine:migrations:migrate
 ```
 
 http://localhost:18080/?pgsql=database&username=app&db=app&ns=public
