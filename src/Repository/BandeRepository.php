@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Bande;
+use App\Entity\Compte;
 use App\Entity\Depense;
 use App\Entity\Vente;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -32,13 +33,39 @@ class BandeRepository extends ServiceEntityRepository
         }
     }
 
-    public function findLatest()
+    public function findLatestNotCloture()
     {
         $qb = $this->createQueryBuilder('p')
             ->where('p.date_cloture IS NULL')
             ->orderBy('p.date_debut', 'DESC');
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function getBandes()
+    {
+        $qb = $this->createQueryBuilder('p')
+            ->select('p, d, v, CASE WHEN p.date_cloture IS NULL THEN 1 ELSE 0 END AS is_open')
+            ->orderBy('p.date_debut', 'DESC')
+            ->innerJoin('p.ventes', 'v')
+            ->innerJoin('p.depenses', 'd')
+        ;
+
+        $results = $qb->getQuery()->getResult();
+        $bandes = [
+            'all' => $results,
+            'open' => [],
+            'close' => []
+        ];
+        foreach ($results as $bande) {
+            if ($bande['is_open']) {
+                $bandes['open'][] = $bande[0];
+            } else {
+                $bandes['close'][] = $bande[0];
+            }
+        }
+
+        return $bandes;
     }
 
     public function findLatestCloture()
@@ -57,6 +84,24 @@ class BandeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    public function soldeCloture($bandesCloture): float
+    {
+        $bilan = array_reduce($bandesCloture, function ($current, $bande) {
+            $current += $this->bilan($bande);
+            return $current;
+        }, 0);
+        return Compte::COMPTE + $bilan;
+    }
+
+    public function soldeCurrent($allBandes): float
+    {
+        $bilan = array_reduce($allBandes, function ($current, $bande) {
+            $current += $this->bilan($bande[0]);
+            return $current;
+        }, 0);
+        return Compte::COMPTE + $bilan;
     }
 
     public function totalDepense(Bande $entity): int

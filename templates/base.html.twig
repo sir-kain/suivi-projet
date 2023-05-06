@@ -28,21 +28,18 @@
     <nav>
         <ul>
             <li>
-                {#                        <strong>Logo</strong> #}
+                <a href="{{ path('app_bande_index') }}">Accueil</a>
             </li>
         </ul>
         <ul>
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li>
-                    <a href="{{ path('app_bande_index') }}">Accueil</a>
-                </li>
-                <li>
-                    <a href="/bande">Depense hors bande</a>
-                </li>
-                <li>
                     <details role="list">
                         <summary  aria-haspopup="listbox" role="link">{{ app.user.email }}</summary>
                         <ul role="listbox">
+                            <li>
+                                <a href="/bande">Depense hors bande</a>
+                            </li>
                             <li><a href="{{ path('app_logout') }}">Deconnexion</a></li>
                         </ul>
                     </details>

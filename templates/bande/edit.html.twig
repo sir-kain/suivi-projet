@@ -3,11 +3,16 @@
 {% block title %}Edit Bande{% endblock %}
 
 {% block body %}
-    <h1>Editer les infos de la bande</h1>
+    <article>
+        <header>
+            <h1>Editer les infos de la bande</h1>
+        </header>
 
-    {{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
+        {{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
 
-    <a href="{{ path('app_bande_index') }}">Retour à la liste des bandes</a>
-
-    {{ include('bande/_delete_form.html.twig') }}
+        <footer>
+            <a href="{{ path('app_bande_index') }}">Retour à la liste des bandes</a>
+            {{ include('bande/_delete_form.html.twig') }}
+        </footer>
+    </article>
 {% endblock %}

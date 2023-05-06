@@ -79,7 +79,8 @@
                     <td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
                     <td class="actions">
                         <a href="#" role="button" class="outline" data-tooltip="Consulter les details de la depense"
-                           onclick="toggleModal(event)" data-depense-id="{{ depense.id }}" data-target="modal-detail-depense">
+                           onclick="toggleModal(event)" data-depense-id="{{ depense.id }}"
+                           data-target="modal-detail-depense">
                             <i class="fa-regular fa-eye"></i>
                         </a>
                         <a href="#" onclick="toggleModal(event)" data-depense-id="{{ depense.id }}"
@@ -91,16 +92,18 @@
                     </td>
                 </tr>
             {% endfor %}
+            </tbody>
+            <tfoot>
             <tr>
-                <th>Total</th>
-                <td>
+                <th scope="col">Total</th>
+                <td scope="col">
                     <mark>
                         {{ totalDepense }}
                         FCFA
                     </mark>
                 </td>
             </tr>
-            </tbody>
+            </tfoot>
         </table>
     </details>
 
@@ -145,16 +148,18 @@
                     </td>
                 </tr>
             {% endfor %}
+            </tbody>
+            <tfoot>
             <tr>
-                <th>Total</th>
-                <td>
+                <th scope="col">Total</th>
+                <td scope="col">
                     <mark>
                         {{ totalVente }}
                         FCFA
                     </mark>
                 </td>
             </tr>
-            </tbody>
+            </tfoot>
         </table>
     </details>
     <h2>Bilan:</h2>

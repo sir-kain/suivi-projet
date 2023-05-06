@@ -37,7 +37,7 @@ des message flash en consequense
 
 - [ ] Envoie mail sur toute action
 
-- [ ] Deploiement sur Heroku
+- [ ] Deploiement 
 
 ## Commandes
 

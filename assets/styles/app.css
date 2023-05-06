@@ -1,41 +1,45 @@
 body > header {
-  padding: 0.5rem;
+    padding: 0.5rem;
 }
 
-h1,
-h2 {
-  display: inline-block;
+h1, h2, h3 {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+article figure {
+    margin-bottom: 0;
 }
 
 .warning {
-  color: #b71c1c;
-  border-color: #b71c1c;
+    color: #b71c1c;
+    border-color: #b71c1c;
 }
 
 .success {
-  color: #ddffdd;
+    color: #ddffdd;
 }
 
 table td.actions form {
-  display: inline-block;
-  margin-bottom: unset;
+    display: inline-block;
+    margin-bottom: unset;
 }
 
 table td.actions a,
 table td.actions button {
-  padding: 0.3rem;
-  line-height: 1;
-  margin-bottom: unset;
+    padding: 0.3rem;
+    line-height: 1;
+    margin-bottom: unset;
 }
 
 table td.actions a i,
 table td.actions button i {
-  font-size: 0.7rem;
+    font-size: 0.7rem;
 }
 
 dialog div:has(> [name="depense[bande]"]),
 dialog div:has(> [name="vente[bande]"]) {
-  display: none;
+    display: none;
 }
 
 /* dialog div:has(> #depense_created_at), dialog div:has(> #vente_created_at) {

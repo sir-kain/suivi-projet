@@ -21,9 +21,12 @@ class BandeController extends AbstractController
     #[Route('/', name: 'app_bande_index', methods: ['GET'])]
     public function index(BandeRepository $bandeRepository): Response
     {
+        ['all' => $all, 'open' => $open, 'close' => $close] = $bandeRepository->getBandes();
         return $this->render('bande/index.html.twig', [
-            'bandes' => $bandeRepository->findLatest(),
-            'bandesCloture' => $bandeRepository->findLatestCloture(),
+            'bandes' => $open,
+            'bandesCloture' => $close,
+            'soldeCloture' => $bandeRepository->soldeCloture($close),
+            'soldeCurrent' => $bandeRepository->soldeCurrent($all),
         ]);
     }
 

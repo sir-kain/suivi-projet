@@ -3,9 +3,13 @@
 {% block title %}New Bande{% endblock %}
 
 {% block body %}
-    <h1>Créer une nouvelle bande</h1>
+    <article>
+        <header>
+            <h1>Créer une nouvelle bande</h1>
+        </header>
 
-    {{ include('bande/_form.html.twig') }}
+        {{ include('bande/_form.html.twig') }}
 
-    <a href="{{ path('app_bande_index') }}">Retour à la liste des bandes</a>
+        <footer><a href="{{ path('app_bande_index') }}">Retour à la liste des bandes</a></footer>
+    </article>
 {% endblock %}
