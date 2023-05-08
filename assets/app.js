@@ -117,3 +117,49 @@ $modalDetailVenteOpenerBtn.forEach(($modalDetailVenteOpener) => {
         }
     });
 });
+
+
+// Forms Handler
+const $modalBtns = document.querySelectorAll(
+    '[data-form-path]'
+);
+
+// GET form
+$modalBtns.forEach(($modalBtn) => {
+    $modalBtn.addEventListener("click", async (e) => {
+        e.preventDefault()
+        const {formPath, target} = $modalBtn.dataset;
+        const $formParent = document.querySelector(`#${target} .formParent`)
+        $formParent.innerHTML = '<progress></progress>'
+        toggleModal(e)
+
+        const response = await fetch(formPath);
+        const formText = await response.text()
+
+        if (!response.ok) {
+            $formParent.innerHTML = ''
+            notyf.error("Une erreur est survenue.");
+            return;
+        }
+
+        $formParent.innerHTML = formText
+
+    });
+});
+
+
+// POST form
+window.handleForm = async function (e) {
+    e.preventDefault()
+    const form = e.target;
+    const action = form.action;
+    const response = await fetch(action, {
+        method: "post",
+        body: new FormData(form),
+    });
+    if (response.redirected) {
+        window.location.href = response.url;
+    } else {
+        form.outerHTML = await response.text();
+    }
+}

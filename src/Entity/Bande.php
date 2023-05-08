@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use IntlDateFormatter;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BandeRepository::class)]
 class Bande
@@ -18,12 +19,15 @@ class Bande
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column]
     private ?int $nb_poussins = null;
 
+    #[Assert\NotNull]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $date_debut = null;
 
+    #[Assert\PositiveOrZero]
     #[ORM\Column]
     private int $nb_mortalite = 0;
 
@@ -35,6 +39,10 @@ class Bande
     #[ORM\OrderBy(['created_at' => 'DESC'])]
     private Collection $ventes;
 
+    #[Assert\GreaterThan(
+        propertyPath: 'date_debut',
+        message: "La date de cloture doit être supérieure à la date de début."
+    )]
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $date_cloture = null;
 
@@ -157,7 +165,7 @@ class Bande
     {
         $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
         $date = $formatter->format($this->getDateDebut());
-        return  "Bande {$this->nb_poussins} du $date";
+        return "Bande {$this->nb_poussins} du $date";
     }
 
     public function getDateCloture(): ?\DateTimeInterface

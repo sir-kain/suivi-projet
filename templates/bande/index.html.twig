@@ -41,35 +41,27 @@
                                 <i class="fa-solid fa-pen-to-square"></i>
                             </a>
                             <a href="#" role="button" class="outline warning"
-                               data-target="modal-cloture-bande-{{ bande.id }}" onclick="toggleModal(event)"
+                               data-target="modal-cloture-bande-{{ bande.id }}"
+                               data-form-path="{{ path('app_bande_cloture', {'id': bande.id}) }}"
                                data-tooltip="Cloturer la bande">
                                 <i class="fa-regular fa-hourglass"></i>
                             </a>
-                            <!-- Modal -->
-                            <dialog id="modal-cloture-bande-{{ bande.id }}">
-                                <article>
-                                    <a href="#close" aria-label="Close" class="close"
-                                       data-target="modal-cloture-bande-{{ bande.id }}"
-                                       onclick="toggleModal(event)"></a>
-                                    <h3>Cloturer la bande du
-                                        {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}
-                                        !</h3>
-                                    <form name="bande" action="{{ path('app_bande_cloture', {'id': bande.id}) }}"
-                                          method="POST">
-                                        <div>
-                                            <label for="date_cloture" class="required">Cloturée le</label>
-                                            <input type="date" id="date_cloture" name="date_cloture"
-                                                   required="required">
-                                        </div>
-                                        <button class="outline">
-                                            Cloturer
-                                            <i class="fa-regular fa-hourglass"></i>
-                                        </button>
-                                    </form>
-                                </article>
-                            </dialog>
                         </td>
                     </tr>
+                    <!-- Modal -->
+                    <dialog id="modal-cloture-bande-{{ bande.id }}">
+                        <article>
+                            <a href="#close" aria-label="Close" class="close"
+                               data-target="modal-cloture-bande-{{ bande.id }}"
+                               onclick="toggleModal(event)"></a>
+                            <header>
+                                <h3>Cloturer la bande du
+                                    {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}
+                                    !</h3>
+                            </header>
+                            <div class="formParent"></div>
+                        </article>
+                    </dialog>
                 {% else %}
                     <tr>
                         <td colspan="5">Pas de bandes actuellement</td>

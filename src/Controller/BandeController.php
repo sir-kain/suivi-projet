@@ -11,6 +11,8 @@ use App\Form\VenteType;
 use App\Repository\BandeRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -97,12 +99,29 @@ class BandeController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}/cloture', name: 'app_bande_cloture', methods: ['POST'])]
+    #[Route('/{id}/cloture', name: 'app_bande_cloture', methods: ['GET', 'POST'])]
     public function cloture(Request $request, Bande $bande, BandeRepository $bandeRepository): Response
     {
-        $bande->setDateCloture(new DateTime($request->get('date_cloture')));
-        $bandeRepository->save($bande, true);
-        return $this->redirectToRoute('app_bande_index', [], Response::HTTP_SEE_OTHER);
+        $form = $this->createFormBuilder($bande, ['attr' => ['onsubmit' => 'return handleForm(event);']])
+            ->setAction($this->generateUrl('app_bande_cloture', ['id' => $bande->getId()]))
+            ->add('date_cloture', DateType::class, [
+                'label' => 'Date cloture',
+                'widget' => 'single_text',
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Cloturer la bande'])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $bandeRepository->save($bande, true);
+
+            return $this->redirectToRoute('app_bande_index', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('bande/_form-cloture.html.twig', [
+            'bande' => $bande,
+            'formBande' => $form,
+        ]);
     }
 
     #[Route('/{id}', name: 'app_bande_delete', methods: ['POST'])]

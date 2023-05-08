@@ -14,7 +14,9 @@
 
 - [x] Calculer et afficher la duree en jour d'une bande, Tenir en compte la date de cloture.
 
-- [x] Gerer cloture bande
+- [ ] Gerer cloture bande
+-- [ ] Valider la cloture en fonction du nombre de poulet dans le stock
+-- [ ] Ajouter le boouton cloture sur la page details bande
 
 - [x] Ajouter les colonnes description et client a la vente
 

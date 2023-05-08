@@ -12,7 +12,7 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Bande>
  *
- * @method Bande|null find($id, $lockMode = null, $lockVersion = null)
+// * @method Bande|null find($id, $lockMode = null, $lockVersion = null)
  * @method Bande|null findOneBy(array $criteria, array $orderBy = null)
  * @method Bande[]    findAll()
  * @method Bande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
@@ -33,6 +33,17 @@ class BandeRepository extends ServiceEntityRepository
         }
     }
 
+    public function find($id, $lockMode = null, $lockVersion = null): Bande|null {
+        $qb = $this->createQueryBuilder('b')
+            ->leftJoin('b.depenses', 'd')
+            ->leftJoin('b.ventes', 'v')
+            ->addSelect('d, v')
+            ->where('b.id = :id')
+            ->setParameter('id', $id);
+
+        return $qb->getQuery()->getOneOrNullResult();
+    }
+
     public function findLatestNotCloture()
     {
         $qb = $this->createQueryBuilder('p')
@@ -47,8 +58,8 @@ class BandeRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('p')
             ->select('p, d, v, CASE WHEN p.date_cloture IS NULL THEN 1 ELSE 0 END AS is_open')
             ->orderBy('p.date_debut', 'DESC')
-            ->innerJoin('p.ventes', 'v')
-            ->innerJoin('p.depenses', 'd')
+            ->leftJoin('p.ventes', 'v')
+            ->leftJoin('p.depenses', 'd')
         ;
 
         $results = $qb->getQuery()->getResult();

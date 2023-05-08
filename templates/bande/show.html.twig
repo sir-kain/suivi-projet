@@ -4,12 +4,19 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Bande du
-        {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
-    {% if not bande.isClotured %}
+    {% if bande.isClotured %}
+        <h1>
+            <del>Bande du
+                {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</del>
+        </h1>
+    {% else %}
+        <h1>Bande du
+            {{ bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</h1>
         <a href="#" data-target="modal-edit-bande" onclick="toggleModal(event)"
            data-tooltip="Editer les infos de la bande">
-            <i class="fa-solid fa-pen-to-square"></i>
+            <sub>
+                <i class="fa-solid fa-pen-to-square"></i>
+            </sub>
         </a>
     {% endif %}
 

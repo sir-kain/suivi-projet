@@ -2,10 +2,10 @@
 {% use 'form_div_layout.html.twig' %}
 
 {%- block form_widget_simple -%}
-	{% if not form.vars.valid %}
-		{% set attr = attr|merge({'aria-invalid': 'true'})%}
-	{% endif %}
-	{{ parent() }}
+    {% if not form.vars.valid %}
+        {% set attr = attr|merge({'aria-invalid': 'true'}) %}
+    {% endif %}
+    {{ parent() }}
 {%- endblock form_widget_simple -%}
 
 
@@ -24,9 +24,13 @@
 {%- endblock form_row -%}
 
 {%- block form_errors -%}
-	{%- if errors|length > 0 -%}
-		{%- for error in errors -%}
-			<small class="warning">{{ error.message }}</small>
-		{%- endfor -%}
-	{%- endif -%}
+    {%- if errors|length > 0 -%}
+        <ul>
+            {%- for error in errors -%}
+                <li>
+                    <small class="warning">{{ error.message }}</small>
+                </li>
+            {%- endfor -%}
+        </ul>
+    {%- endif -%}
 {%- endblock form_errors -%}

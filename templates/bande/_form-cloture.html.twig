@@ -1,0 +1,19 @@
+{{ form_start(formBande) }}
+<table role="grid">
+    <tbody>
+    <tr>
+        <td>Nombre de poussins</td>
+        <td>{{ bande.nbPoussins }}</td>
+    </tr>
+    <tr>
+        <td>Date démarrage</td>
+        <td>{{ bande.dateDebut ? bande.dateDebut|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
+    </tr>
+    <tr>
+        <td>Mortalites</td>
+        <td>{{ bande.nbMortalite }}</td>
+    </tr>
+    </tbody>
+</table>
+{{ form_widget(formBande) }}
+{{ form_end(formBande) }}
