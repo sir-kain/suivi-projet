@@ -86,12 +86,12 @@
                     <td>{{ depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
                     <td class="actions">
                         <a href="#" role="button" class="outline" data-tooltip="Consulter les details de la depense"
-                           onclick="toggleModal(event)" data-depense-id="{{ depense.id }}"
+                           data-path-content="{{ path('app_depense_show', {'id': depense.id}) }}"
                            data-target="modal-detail-depense">
                             <i class="fa-regular fa-eye"></i>
                         </a>
                         <a href="#" `
-                           data-form-path="{{ path('app_depense_edit', {'id': depense.id}) }}"
+                           data-path-content="{{ path('app_depense_edit', {'id': depense.id}) }}"
                            data-target="modal-edit-depense" role="button" class="outline"
                            data-tooltip="Modifier la depense">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -144,10 +144,11 @@
                     <td>{{ vente.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") }}</td>
                     <td class="actions">
                         <a href="#" role="button" class="outline" data-tooltip="Consulter les details de la vente"
-                           onclick="toggleModal(event)" data-vente-id="{{ vente.id }}" data-target="modal-detail-vente">
+                           data-path-content="{{ path('app_vente_show', {'id': vente.id}) }}"
+                           data-target="modal-detail-vente">
                             <i class="fa-regular fa-eye"></i>
                         </a>
-                        <a href="#" data-form-path="{{ path('app_vente_edit', {'id': vente.id}) }}"
+                        <a href="#" data-path-content="{{ path('app_vente_edit', {'id': vente.id}) }}"
                            data-target="modal-edit-vente" role="button" class="outline"
                            data-tooltip="Modifier la vente">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -179,9 +180,11 @@
     <!-- Modal -->
     <dialog id="modal-edit-bande">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande"
-               onclick="toggleModal(event)"></a>
-            <h3>Editer les infos de la bande!</h3>
+            <header>
+                <a href="#close" aria-label="Close" class="close" data-target="modal-edit-bande"
+                   onclick="toggleModal(event)"></a>
+                <h3>Editer les infos de la bande!</h3>
+            </header>
             {{ include('bande/_form.html.twig', {'button_label': 'Editer'}) }}
         </article>
     </dialog>
@@ -189,9 +192,11 @@
     <!-- Modal -->
     <dialog id="modal-add-depense">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-add-depense"
-               onclick="toggleModal(event)"></a>
-            <h3>Renseigner une nouvelle dépense!</h3>
+            <header>
+                <a href="#close" aria-label="Close" class="close" data-target="modal-add-depense"
+                   onclick="toggleModal(event)"></a>
+                <h3>Renseigner une nouvelle dépense!</h3>
+            </header>
             {{ include('depense/_form.html.twig') }}
         </article>
     </dialog>
@@ -199,29 +204,33 @@
     <!-- Modal -->
     <dialog id="modal-edit-depense">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense"
-               onclick="toggleModal(event)"></a>
-            <h3>Modifier la depense!</h3>
-            <div class="formParent"></div>
+            <header>
+                <a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense"
+                   onclick="toggleModal(event)"></a>
+                <h3>Modifier la depense!</h3>
+            </header>
+            <div class="contentTarget"></div>
         </article>
     </dialog>
 
     <!-- Modal -->
     <dialog id="modal-detail-depense">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-detail-depense"
-               onclick="toggleModal(event)"></a>
-            <h3>Details depense!</h3>
-            <table role="grid" class="table"></table>
+            <header>
+                <h3>Details depense!</h3>
+                <a href="#close" aria-label="Close" class="close" data-target="modal-detail-depense"
+                   onclick="toggleModal(event)"></a>
+            </header>
+            <div class="contentTarget"></div>
         </article>
     </dialog>
 
     <!-- Modal -->
     <dialog id="modal-add-vente">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-add-vente"
-               onclick="toggleModal(event)"></a>
-            <h3>Renseigner une nouvelle vente!</h3>
+            <header><a href="#close" aria-label="Close" class="close" data-target="modal-add-vente"
+                       onclick="toggleModal(event)"></a>
+                <h3>Renseigner une nouvelle vente!</h3></header>
             {{ include('vente/_form.html.twig') }}
         </article>
     </dialog>
@@ -229,20 +238,22 @@
     <!-- Modal -->
     <dialog id="modal-edit-vente">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-edit-vente"
-               onclick="toggleModal(event)"></a>
-            <h3>Modifier la vente!</h3>
-            <div class="formParent"></div>
+            <header>
+                <a href="#close" aria-label="Close" class="close" data-target="modal-edit-vente"
+                   onclick="toggleModal(event)"></a>
+                <h3>Modifier la vente!</h3>
+            </header>
+            <div class="contentTarget"></div>
         </article>
     </dialog>
 
     <!-- Modal -->
     <dialog id="modal-detail-vente">
         <article>
-            <a href="#close" aria-label="Close" class="close" data-target="modal-detail-vente"
-               onclick="toggleModal(event)"></a>
-            <h3>Details vente!</h3>
-            <table role="grid" class="table"></table>
+            <header><a href="#close" aria-label="Close" class="close" data-target="modal-detail-vente"
+                       onclick="toggleModal(event)"></a>
+                <h3>Details vente!</h3></header>
+            <div class="contentTarget"></div>
         </article>
     </dialog>
 {% endblock %}

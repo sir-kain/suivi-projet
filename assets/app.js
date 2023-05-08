@@ -18,72 +18,29 @@ import "./modal";
 
 window.notyf = new Notyf();
 
-const $modalDetailVenteOpenerBtn = document.querySelectorAll(
-    '[data-target="modal-detail-vente"][data-vente-id], [data-target="modal-detail-depense"][data-depense-id]'
-);
-
-$modalDetailVenteOpenerBtn.forEach(($modalDetailVenteOpener) => {
-    $modalDetailVenteOpener.addEventListener("click", async (e) => {
-        const {venteId, depenseId} = $modalDetailVenteOpener.dataset;
-        let url = `/vente/${venteId}`
-        if (depenseId) {
-            url = `/depense/${depenseId}`
-        }
-        const response = await fetch(url);
-        const $form = await response.text();
-
-        if (!response.ok) {
-            notyf.error("Une erreur est survenue.");
-            return;
-        }
-
-        if (depenseId) {
-            document
-                .querySelectorAll("#modal-detail-depense article table")
-                .forEach(($form) => {
-                    $form.remove();
-                });
-            document
-                .querySelector("#modal-detail-depense article")
-                .insertAdjacentHTML("beforeend", $form);
-        } else {
-            document
-                .querySelectorAll("#modal-detail-vente article table")
-                .forEach(($form) => {
-                    $form.remove();
-                });
-            document
-                .querySelector("#modal-detail-vente article")
-                .insertAdjacentHTML("beforeend", $form);
-        }
-    });
-});
-
-
-// Forms Handler
+// GET Modal content
 const $modalBtns = document.querySelectorAll(
-    '[data-form-path]'
+    '[data-path-content]'
 );
 
-// GET form
 $modalBtns.forEach(($modalBtn) => {
     $modalBtn.addEventListener("click", async (e) => {
         e.preventDefault()
-        const {formPath, target} = $modalBtn.dataset;
-        const $formParent = document.querySelector(`#${target} .formParent`)
-        $formParent.innerHTML = '<progress></progress>'
+        const {pathContent, target} = $modalBtn.dataset;
+        const $contentTarget = document.querySelector(`#${target} .contentTarget`)
+        $contentTarget.innerHTML = '<progress></progress>'
         toggleModal(e)
 
-        const response = await fetch(formPath);
-        const formText = await response.text()
+        const response = await fetch(pathContent);
+        const textContent = await response.text()
 
         if (!response.ok) {
-            $formParent.innerHTML = ''
+            $contentTarget.innerHTML = ''
             notyf.error("Une erreur est survenue.");
             return;
         }
 
-        $formParent.innerHTML = formText
+        $contentTarget.innerHTML = textContent
 
     });
 });

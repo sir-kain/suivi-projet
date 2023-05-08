@@ -2,9 +2,13 @@ body > header {
     padding: 0.5rem;
 }
 
-h1, h2, h3 {
+h2, h3 {
     display: inline-block;
     margin-bottom: 0;
+}
+
+h1 {
+    display: inline-block;
 }
 
 article figure {
