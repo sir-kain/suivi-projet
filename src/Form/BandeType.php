@@ -22,8 +22,7 @@ class BandeType extends AbstractType
             ])
             ->add('nb_mortalite', null, [
                 'label' => 'Mortalités'
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

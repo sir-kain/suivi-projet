@@ -22,8 +22,7 @@ class DepenseType extends AbstractType
                 'label' => 'Créée le',
                 'widget' => 'single_text',
             ])
-            ->add('bande')
-        ;
+            ->add('bande');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

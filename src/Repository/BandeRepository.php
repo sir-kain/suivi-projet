@@ -12,7 +12,6 @@ use Doctrine\Persistence\ManagerRegistry;
 /**
  * @extends ServiceEntityRepository<Bande>
  *
-// * @method Bande|null find($id, $lockMode = null, $lockVersion = null)
  * @method Bande|null findOneBy(array $criteria, array $orderBy = null)
  * @method Bande[]    findAll()
  * @method Bande[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
@@ -33,7 +32,8 @@ class BandeRepository extends ServiceEntityRepository
         }
     }
 
-    public function find($id, $lockMode = null, $lockVersion = null): Bande|null {
+    public function find($id, $lockMode = null, $lockVersion = null): Bande|null
+    {
         $qb = $this->createQueryBuilder('b')
             ->leftJoin('b.depenses', 'd')
             ->leftJoin('b.ventes', 'v')
@@ -59,8 +59,7 @@ class BandeRepository extends ServiceEntityRepository
             ->select('p, d, v, CASE WHEN p.date_cloture IS NULL THEN 1 ELSE 0 END AS is_open')
             ->orderBy('p.date_debut', 'DESC')
             ->leftJoin('p.ventes', 'v')
-            ->leftJoin('p.depenses', 'd')
-        ;
+            ->leftJoin('p.depenses', 'd');
 
         $results = $qb->getQuery()->getResult();
         $bandes = [
@@ -106,21 +105,9 @@ class BandeRepository extends ServiceEntityRepository
         return Compte::COMPTE + $bilan;
     }
 
-    public function soldeCurrent($allBandes): float
+    public function bilan($entity): float
     {
-        $bilan = array_reduce($allBandes, function ($current, $bande) {
-            $current += $this->bilan($bande[0]);
-            return $current;
-        }, 0);
-        return Compte::COMPTE + $bilan;
-    }
-
-    public function totalDepense(Bande $entity): int
-    {
-        return array_reduce($entity->getDepenses()->toArray(), function ($carry, $item) {
-            /** @var Depense $item */
-            return $carry + $item->getPrix();
-        }, 0);
+        return $this->totalVente($entity) - $this->totalDepense($entity);
     }
 
     public function totalVente(Bande $entity): int
@@ -131,9 +118,21 @@ class BandeRepository extends ServiceEntityRepository
         }, 0);
     }
 
-    public function bilan($entity): float
+    public function totalDepense(Bande $entity): int
     {
-        return $this->totalVente($entity) - $this->totalDepense($entity);
+        return array_reduce($entity->getDepenses()->toArray(), function ($carry, $item) {
+            /** @var Depense $item */
+            return $carry + $item->getPrix();
+        }, 0);
+    }
+
+    public function soldeCurrent($allBandes): float
+    {
+        $bilan = array_reduce($allBandes, function ($current, $bande) {
+            $current += $this->bilan($bande[0]);
+            return $current;
+        }, 0);
+        return Compte::COMPTE + $bilan;
     }
 
     public function stock(Bande $entity): int

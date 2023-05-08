@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BandeRepository;
 use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -25,7 +26,7 @@ class Bande
 
     #[Assert\NotNull]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $date_debut = null;
+    private ?DateTimeInterface $date_debut = null;
 
     #[Assert\PositiveOrZero]
     #[ORM\Column]
@@ -44,7 +45,7 @@ class Bande
         message: "La date de cloture doit être supérieure à la date de début."
     )]
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $date_cloture = null;
+    private ?DateTimeInterface $date_cloture = null;
 
     public function __construct()
     {
@@ -69,18 +70,6 @@ class Bande
         return $this;
     }
 
-    public function getDateDebut(): ?\DateTimeInterface
-    {
-        return $this->date_debut;
-    }
-
-    public function setDateDebut(\DateTimeInterface $date_debut): self
-    {
-        $this->date_debut = $date_debut;
-
-        return $this;
-    }
-
     public function getNbMortalite(): int
     {
         return $this->nb_mortalite;
@@ -99,6 +88,35 @@ class Bande
             return date_diff($this->getDateCloture(), $this->getDateDebut())->days;
         }
         return date_diff(new DateTime(), $this->getDateDebut())->days;
+    }
+
+    public function isClotured(): bool
+    {
+        return $this->date_cloture !== null;
+    }
+
+    public function getDateCloture(): ?DateTimeInterface
+    {
+        return $this->date_cloture;
+    }
+
+    public function setDateCloture(?DateTimeInterface $date_cloture): self
+    {
+        $this->date_cloture = $date_cloture;
+
+        return $this;
+    }
+
+    public function getDateDebut(): ?DateTimeInterface
+    {
+        return $this->date_debut;
+    }
+
+    public function setDateDebut(DateTimeInterface $date_debut): self
+    {
+        $this->date_debut = $date_debut;
+
+        return $this;
     }
 
     /**
@@ -166,22 +184,5 @@ class Bande
         $formatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::MEDIUM, IntlDateFormatter::NONE);
         $date = $formatter->format($this->getDateDebut());
         return "Bande {$this->nb_poussins} du $date";
-    }
-
-    public function getDateCloture(): ?\DateTimeInterface
-    {
-        return $this->date_cloture;
-    }
-
-    public function setDateCloture(?\DateTimeInterface $date_cloture): self
-    {
-        $this->date_cloture = $date_cloture;
-
-        return $this;
-    }
-
-    public function isClotured(): bool
-    {
-        return $this->date_cloture !== null;
     }
 }

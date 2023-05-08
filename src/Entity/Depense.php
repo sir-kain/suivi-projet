@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\DepenseRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -21,7 +22,7 @@ class Depense
     private ?float $prix = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $created_at = null;
+    private ?DateTimeInterface $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'depenses')]
     #[ORM\JoinColumn(nullable: false)]
@@ -56,12 +57,12 @@ class Depense
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeInterface $created_at): self
+    public function setCreatedAt(DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
 
