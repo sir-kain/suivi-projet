@@ -18,65 +18,6 @@ import "./modal";
 
 window.notyf = new Notyf();
 
-document.addEventListener("submit", async (e) => {
-    const actions = [...document.querySelectorAll("[name='vente'], [name='depense']")].map($form => $form.action);
-    const form = e.target;
-    const action = form.action;
-    if (actions.includes(action)) {
-        e.preventDefault();
-        const response = await fetch(action, {
-            method: "post",
-            body: new FormData(form),
-        });
-        if (response.redirected) {
-            window.location.href = response.url;
-        } else {
-            form.outerHTML = await response.text();
-        }
-    }
-});
-
-const $modalOpenerBtn = document.querySelectorAll(
-    '[data-target="modal-edit-vente"][data-vente-id], [data-target="modal-edit-depense"][data-depense-id]'
-);
-
-$modalOpenerBtn.forEach(($modalOpener) => {
-    $modalOpener.addEventListener("click", async (e) => {
-        const {venteId, depenseId} = $modalOpener.dataset;
-        let url = `/vente/${venteId}/edit`
-        if (depenseId) {
-            url = `/depense/${depenseId}/edit`
-        }
-        const response = await fetch(url);
-        const $form = await response.text();
-
-        if (!response.ok) {
-            notyf.error("Une erreur est survenue.");
-            return;
-        }
-
-        if (depenseId) {
-            document
-                .querySelectorAll("#modal-edit-depense article form")
-                .forEach(($form) => {
-                    $form.remove();
-                });
-            document
-                .querySelector("#modal-edit-depense article")
-                .insertAdjacentHTML("beforeend", $form);
-        } else {
-            document
-                .querySelectorAll("#modal-edit-vente article form")
-                .forEach(($form) => {
-                    $form.remove();
-                });
-            document
-                .querySelector("#modal-edit-vente article")
-                .insertAdjacentHTML("beforeend", $form);
-        }
-    });
-});
-
 const $modalDetailVenteOpenerBtn = document.querySelectorAll(
     '[data-target="modal-detail-vente"][data-vente-id], [data-target="modal-detail-depense"][data-depense-id]'
 );

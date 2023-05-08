@@ -90,7 +90,8 @@
                            data-target="modal-detail-depense">
                             <i class="fa-regular fa-eye"></i>
                         </a>
-                        <a href="#" onclick="toggleModal(event)" data-depense-id="{{ depense.id }}"
+                        <a href="#" `
+                           data-form-path="{{ path('app_depense_edit', {'id': depense.id}) }}"
                            data-target="modal-edit-depense" role="button" class="outline"
                            data-tooltip="Modifier la depense">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -146,7 +147,7 @@
                            onclick="toggleModal(event)" data-vente-id="{{ vente.id }}" data-target="modal-detail-vente">
                             <i class="fa-regular fa-eye"></i>
                         </a>
-                        <a href="#" onclick="toggleModal(event)" data-vente-id="{{ vente.id }}"
+                        <a href="#" data-form-path="{{ path('app_vente_edit', {'id': vente.id}) }}"
                            data-target="modal-edit-vente" role="button" class="outline"
                            data-tooltip="Modifier la vente">
                             <i class="fa-solid fa-pen-to-square"></i>
@@ -201,6 +202,7 @@
             <a href="#close" aria-label="Close" class="close" data-target="modal-edit-depense"
                onclick="toggleModal(event)"></a>
             <h3>Modifier la depense!</h3>
+            <div class="formParent"></div>
         </article>
     </dialog>
 
@@ -230,6 +232,7 @@
             <a href="#close" aria-label="Close" class="close" data-target="modal-edit-vente"
                onclick="toggleModal(event)"></a>
             <h3>Modifier la vente!</h3>
+            <div class="formParent"></div>
         </article>
     </dialog>
 
