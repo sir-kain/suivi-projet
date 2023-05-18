@@ -49,9 +49,14 @@ class DepenseController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_depense_show', methods: ['GET'])]
-    public function show(Depense $depense): Response
+    public function show(Request $request, Depense $depense): Response
     {
-        return $this->render('depense/show.html.twig', [
+        $isAjaxRequest = $request->query->get('ajax');
+        $templateUrl = 'depense/show-hb.html.twig';
+        if ($isAjaxRequest) {
+            $templateUrl = 'depense/show.html.twig';
+        }
+        return $this->render($templateUrl, [
             'depense' => $depense,
         ]);
     }
