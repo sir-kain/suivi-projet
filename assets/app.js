@@ -31,7 +31,7 @@ $modalBtns.forEach(($modalBtn) => {
         $contentTarget.innerHTML = '<progress></progress>'
         toggleModal(e)
 
-        const response = await fetch(pathContent);
+        const response = await fetch(`${pathContent}?ajax=true`);
         const textContent = await response.text()
 
         if (!response.ok) {

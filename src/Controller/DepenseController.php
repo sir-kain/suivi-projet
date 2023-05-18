@@ -59,16 +59,26 @@ class DepenseController extends AbstractController
     #[Route('/{id}/edit', name: 'app_depense_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Depense $depense, DepenseRepository $depenseRepository): Response
     {
-        $form = $this->createForm(DepenseType::class, $depense, ['action' => $this->generateUrl('app_depense_edit', ['id' => $depense->getId()])]);
+        $isAjaxRequest = $request->query->get('ajax');
+        $formAction = $this->generateUrl('app_depense_edit', ['id' => $depense->getId()]);
+        $templateUrl = 'depense/new.html.twig';
+        if ($isAjaxRequest) {
+            $formAction = $this->generateUrl('app_depense_edit', ['id' => $depense->getId(), 'ajax' => 'true']);
+            $templateUrl = 'depense/_form.html.twig';
+        }
+        $form = $this->createForm(DepenseType::class, $depense, ['action' => $formAction]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $depenseRepository->save($depense, true);
 
-            return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
+            if ($isAjaxRequest) {
+                return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
+            }
+            return $this->redirectToRoute('app_depense_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('depense/_form.html.twig', [
+        return $this->render($templateUrl, [
             'depense' => $depense,
             'formDepense' => $form,
         ]);
