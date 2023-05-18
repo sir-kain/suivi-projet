@@ -1,11 +1,16 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}New Depense{% endblock %}
+{% block title %}New Depense
+{% endblock %}
 
 {% block body %}
     <h1>Ajouter une nouvelle Dépense</h1>
 
-    {{ include('depense/_form.html.twig') }}
+    {{ form_start(formDepense) }}
+    {{ form_widget(formDepense) }}
+    <button class="btn">{{ button_label|default('Enregistrer') }}</button>
+    {{ form_end(formDepense) }}
+
 
     <a href="{{ path('app_depense_index') }}">Retour à la liste des dépense hors bande</a>
 {% endblock %}

@@ -51,7 +51,7 @@ window.handleForm = async function (e) {
     e.preventDefault()
     const form = e.target;
     const action = form.action;
-    const response = await fetch(action, {
+    const response = await fetch(`${action}?ajax=true`, {
         method: "post",
         body: new FormData(form),
     });

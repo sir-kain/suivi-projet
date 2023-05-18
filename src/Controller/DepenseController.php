@@ -13,17 +13,22 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/depense')]
 class DepenseController extends AbstractController
 {
-//    #[Route('/', name: 'app_depense_index', methods: ['GET'])]
-//    public function index(DepenseRepository $depenseRepository): Response
-//    {
-//        return $this->render('depense/index.html.twig', [
-//            'depenses' => $depenseRepository->findAll(),
-//        ]);
-//    }
+    #[Route('/', name: 'app_depense_index', methods: ['GET'])]
+    public function index(DepenseRepository $depenseRepository): Response
+    {
+        return $this->render('depense/index.html.twig', [
+            'depenses' => $depenseRepository->findBy(['bande' => null]),
+        ]);
+    }
 
     #[Route('/new', name: 'app_depense_new', methods: ['GET', 'POST'])]
     public function new(Request $request, DepenseRepository $depenseRepository): Response
     {
+        $isAjaxRequest = $request->query->get('ajax');
+        $templateUrl = 'depense/new.html.twig';
+        if ($isAjaxRequest) {
+            $templateUrl = 'depense/_form.html.twig';
+        }
         $depense = new Depense();
         $form = $this->createForm(DepenseType::class, $depense, ['action' => $this->generateUrl('app_depense_new')]);
         $form->handleRequest($request);
@@ -31,10 +36,13 @@ class DepenseController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $depenseRepository->save($depense, true);
 
-            return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
+            if ($depense->getBande()) {
+                return $this->redirectToRoute('app_bande_show', ['id' => $depense->getBande()->getId()], Response::HTTP_SEE_OTHER);
+            }
+            return $this->redirectToRoute('app_depense_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('depense/_form.html.twig', [
+        return $this->render($templateUrl, [
             'depense' => $depense,
             'formDepense' => $form,
         ]);

@@ -41,8 +41,8 @@ table td.actions button i {
     font-size: 0.7rem;
 }
 
-dialog div:has(> [name="depense[bande]"]),
-dialog div:has(> [name="vente[bande]"]) {
+form div:has(> [name="depense[bande]"]),
+form div:has(> [name="vente[bande]"]) {
     display: none;
 }
 

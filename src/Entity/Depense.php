@@ -25,7 +25,7 @@ class Depense
     private ?DateTimeInterface $created_at = null;
 
     #[ORM\ManyToOne(inversedBy: 'depenses')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Bande $bande = null;
 
     public function getId(): ?int
