@@ -16,8 +16,14 @@ class DepenseController extends AbstractController
     #[Route('/', name: 'app_depense_index', methods: ['GET'])]
     public function index(DepenseRepository $depenseRepository): Response
     {
+        $depenses = $depenseRepository->findBy(['bande' => null]);
+        $totalDepenseHB = array_reduce($depenses, function ($carry, $item) {
+            /** @var Depense $item */
+            return $carry + $item->getPrix();
+        }, 0);
         return $this->render('depense/index.html.twig', [
-            'depenses' => $depenseRepository->findBy(['bande' => null]),
+            'depenses' => $depenses,
+            'depenseTotalHB' => $totalDepenseHB,
         ]);
     }
 

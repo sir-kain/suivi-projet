@@ -4,41 +4,59 @@
 {% endblock %}
 
 {% block body %}
-    <h1>Dépenses hors bande</h1>
+    <article>
+        <header>
+            <h2>Dépenses hors bande</h2>
+            <a href="{{ path('app_depense_new') }}" data-tooltip="Ajouter une depense hors bande">
+                <i class="fa-solid fa-plus"></i>
+            </a>
+        </header>
 
-    <table class="table" role="grid">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Description</th>
-            <th>Prix</th>
-            <th>Créée le</th>
-            <th>Actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for depense in depenses %}
-            <tr>
-                <td>{{ depense.id }}</td>
-                <td>{{ depense.description }}</td>
-                <td>{{ depense.prix }}</td>
-                <td>{{ depense.createdAt ? depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
-                <td class="actions">
-                    <a href="{{ path('app_depense_show', {'id': depense.id}) }}" role="button" class="outline">
-                        <i class="fa-regular fa-eye"></i>
-                    </a>
-                    <a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline">
-                        <i class="fa-solid fa-pen-to-square"></i>
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Pas de depense hors bande</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_depense_new') }}">Ajouter une nouvelle dépense hors bande</a>
+        <figure>
+            <table class="table" role="grid">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Description</th>
+                    <th>Prix</th>
+                    <th>Créée le</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for depense in depenses %}
+                    <tr>
+                        <td>{{ depense.id }}</td>
+                        <td>{{ depense.description }}</td>
+                        <td>{{ depense.prix }}</td>
+                        <td>{{ depense.createdAt ? depense.createdAt|format_datetime(locale='fr',pattern="EEEE dd MMMM YYYY") : '' }}</td>
+                        <td class="actions">
+                            <a href="{{ path('app_depense_show', {'id': depense.id}) }}" role="button" class="outline">
+                                <i class="fa-regular fa-eye"></i>
+                            </a>
+                            <a href="{{ path('app_depense_edit', {'id': depense.id}) }}" role="button" class="outline">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Pas de depense hors bande</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th scope="col">Total</th>
+                    <td scope="col">
+                        <mark>
+                            {{ depenseTotalHB }}
+                            FCFA
+                        </mark>
+                    </td>
+                </tr>
+                </tfoot>
+            </table>
+        </figure>
+    </article>
 {% endblock %}

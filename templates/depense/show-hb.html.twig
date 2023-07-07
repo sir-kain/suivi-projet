@@ -1,16 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Depense{% endblock %}
+{% block title %}Depense hors bande{% endblock %}
 
 {% block body %}
-    <h1>Depense</h1>
+    <h1>Depense hors bande</h1>
 
     <table class="table">
         <tbody>
-        <tr>
-            <th>Id</th>
-            <td>{{ depense.id }}</td>
-        </tr>
         <tr>
             <th>Description</th>
             <td>{{ depense.description }}</td>
@@ -20,15 +16,15 @@
             <td>{{ depense.prix }}</td>
         </tr>
         <tr>
-            <th>Created_at</th>
+            <th>Date de la depense</th>
             <td>{{ depense.createdAt ? depense.createdAt|date('Y-m-d') : '' }}</td>
         </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_depense_index') }}">back to list</a>
+    <a href="{{ path('app_depense_index') }}">Retour a la liste hors bande</a>
 
-    <a href="{{ path('app_depense_edit', {'id': depense.id}) }}">edit</a>
+    <a href="{{ path('app_depense_edit', {'id': depense.id}) }}">Modifier la depense</a>
 
     {{ include('depense/_delete_form.html.twig') }}
 {% endblock %}
